@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    App.vue<br>
     Login state: {{$store.state.uid != null}}<br>
     <ul>
       <li v-if="$store.state.uid == null">
@@ -17,6 +16,9 @@
       </li>
       <li>
         <router-link to="/index">Home</router-link>
+      </li>
+      <li>
+        <router-link to="/privileged">Privileged</router-link>
       </li>
     </ul>
     <router-view></router-view>

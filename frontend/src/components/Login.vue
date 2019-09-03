@@ -30,8 +30,15 @@ export default {
     return {
       error: null,
       email: "",
-      password: ""
+      password: "",
+      prevRoute: null
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      console.log("beforeRouterEnter: " + from.path);
+      vm.prevRoute = from;
+    });
   },
   mounted() {},
   methods: {
@@ -43,7 +50,7 @@ export default {
         })
         .then(response => {
           this.$store.commit("login", response.data.uid, response.data.email);
-          this.$router.push("index");
+          this.$router.push(this.prevRoute);
         })
         .catch(error => {
           console.log(error.response.data.error);

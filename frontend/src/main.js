@@ -3,6 +3,8 @@ import App from './App.vue'
 import Register from './components/Register.vue'
 import Login from './components/Login.vue'
 import Index from './components/Index.vue'
+import Privileged from './components/Privileged.vue'
+
 import store from './store'
 
 Vue.config.productionTip = false
@@ -30,6 +32,10 @@ const routes = [{
   {
     path: '/index',
     component: Index
+  },
+  {
+    path: '/privileged',
+    component: Privileged
   },
 ]
 
