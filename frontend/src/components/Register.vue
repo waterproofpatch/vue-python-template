@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2 v-if="error">Error: {{error}}</h2>
     <h1>Register</h1>
     <form>
       <input
@@ -32,6 +33,7 @@ export default {
   props: {},
   data() {
     return {
+      error: null,
       email: "",
       password: "",
       passwordConfirmation: ""
@@ -48,6 +50,7 @@ export default {
         })
         .then(response => {})
         .catch(error => {
+          this.error = error.response.data.error;
           console.log(error.response.data.error);
         })
         .finally(response => {});

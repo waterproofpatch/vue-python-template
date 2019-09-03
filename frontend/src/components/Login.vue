@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2 v-if="error">Error: {{error}}</h2>
     <h1>Login</h1>
     <form>
       <input
@@ -14,7 +15,7 @@
       >
       <input
         type="submit"
-        v-on:click="doLogin"
+        v-on:click.prevent="doLogin"
       >
     </form>
   </div>
@@ -27,6 +28,7 @@ export default {
   props: {},
   data() {
     return {
+      error: null,
       email: "",
       password: ""
     };
@@ -42,6 +44,7 @@ export default {
         .then(response => {})
         .catch(error => {
           console.log(error.response.data.error);
+          this.error = error.response.data.error;
         })
         .finally(response => {});
     }
