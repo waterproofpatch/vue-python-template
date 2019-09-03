@@ -1,0 +1,8 @@
+# pyc stuff
+*.pyc
+
+# virtualenv stuff
+venv
+
+#editor stuff
+.vscode
