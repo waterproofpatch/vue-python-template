@@ -17,6 +17,9 @@ from flask_jwt_extended import JWTManager, create_access_token, create_refresh_t
 # my imports from __init__
 from backend import jwt, api, app, db
 
+# globals
+PASSWORD_MIN_LEN = 13
+
 
 class Register(Resource):
     """
@@ -31,35 +34,28 @@ class Register(Resource):
             return {"error": "Must supply email address"}, 400
         if 'password' not in request.get_json():
             return {"error": "Must supply password"}, 400
-        if 'passwordConfirm' not in request.get_json():
+        if 'passwordConfirmation' not in request.get_json():
             return {"error": "Must supply confirmation password"}, 400
-        if 'username' not in request.get_json():
-            return {"error": "Must supply username"}, 400
-        if request.get_json()['password'] != request.get_json()['passwordConfirm']:
+        if request.get_json()['password'] != request.get_json()['passwordConfirmation']:
             return {"error": "Passwords don't match"}, 400
-        if len(request.get_json()['password']) <= 13:
-            return {"error": "Password must be > 13 characters."}, 400
-
+        if len(request.get_json()['password']) <= PASSWORD_MIN_LEN:
+            return {"error": "Password must be > {} characters.".format(PASSWORD_MIN_LEN)}, 400
         if db.session.query(User.id).filter_by(email=request.get_json()['email']).scalar() is not None:
             return {"error": "Email is already registered."}, 400
-        if db.session.query(User.id).filter_by(username=request.get_json()['username']).scalar() is not None:
-            return {"error": "Username is already registered."}, 400
 
         hashed_pw = User.generate_hash(
             plaintext_password=request.get_json()['password'].encode())
         new_user = User(email=request.get_json()['email'],
-                        password=base64.b64encode(hashed_pw).decode(),
-                        username=request.get_json()['username'])
+                        password=base64.b64encode(hashed_pw).decode())
         db.session.add(new_user)
         db.session.commit()
-        ub = User.query.filter_by(email=request.get_json()['email']).first()
 
         # create tokens
         access_token = create_access_token(identity=new_user.email)
         refresh_token = create_refresh_token(identity=new_user.email)
 
         # set the cookies, at them to the response and return it
-        resp = jsonify({'uid': new_user.id, 'username': new_user.username})
+        resp = jsonify({'uid': new_user.id, 'email': new_user.email})
         set_access_cookies(resp, access_token)
         set_refresh_cookies(resp, refresh_token)
         return resp
@@ -86,7 +82,7 @@ class Login(Resource):
             return {"error": "Email or password incorrect"}, 400
 
         # create tokens
-        resp = jsonify({'uid': user.id, 'username': user.username})
+        resp = jsonify({'uid': user.id, 'email': user.email})
         access_token = create_access_token(identity=user.email)
         refresh_token = create_refresh_token(identity=user.email)
 
@@ -107,7 +103,6 @@ class Profile(Resource):
         user = User.query.filter_by(email=get_raw_jwt()['identity']).first()
         return {
             'email': user.email,
-            'username': user.username
         }, 200
 
     # TODO may need fresh token
@@ -133,7 +128,7 @@ class Profile(Resource):
             return {"error": "Email is already registered."}, 400
         user.email = request.json['email']
         db.session.commit()
-        return {'uid': user.id, 'username': user.username}, 200
+        return {'uid': user.id, 'email': user.email}, 200
 
 
 class Items(Resource):

@@ -6,3 +6,6 @@ venv
 
 #editor stuff
 .vscode
+
+# database stuff
+*.db

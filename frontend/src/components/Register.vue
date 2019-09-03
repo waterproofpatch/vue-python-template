@@ -1,6 +1,6 @@
 <template>
   <div>
-    Register
+    <h1>Register</h1>
     <form>
       <input
         placeholder="Email"
@@ -19,7 +19,7 @@
       >
       <input
         type="submit"
-        v-on:click="doRegister"
+        v-on:click.prevent="doRegister"
       >
     </form>
   </div>
@@ -46,15 +46,11 @@ export default {
           password: this.password,
           passwordConfirmation: this.passwordConfirmation
         })
-        .then(response => {
-          console.log("OK");
-        })
+        .then(response => {})
         .catch(error => {
-          console.log("Problem");
+          console.log(error.response.data.error);
         })
-        .finally(response => {
-          console.log("Done.");
-        });
+        .finally(response => {});
     }
   }
 };

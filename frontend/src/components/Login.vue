@@ -1,6 +1,6 @@
 <template>
   <div>
-    Register
+    <h1>Login</h1>
     <form>
       <input
         placeholder="Email"
@@ -39,15 +39,11 @@ export default {
           email: this.email,
           password: this.password
         })
-        .then(response => {
-          console.log("OK");
-        })
+        .then(response => {})
         .catch(error => {
-          console.log("Problem");
+          console.log(error.response.data.error);
         })
-        .finally(response => {
-          console.log("Done.");
-        });
+        .finally(response => {});
     }
   }
 };

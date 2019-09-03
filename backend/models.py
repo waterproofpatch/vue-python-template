@@ -44,14 +44,13 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(300), unique=False, nullable=False)
-    username = db.Column(db.String(120), unique=True, nullable=False)
     items = db.relationship('Item', backref='user', lazy=True)
 
     def __repr__(self):
         """
         String representation for a user
         """
-        return '<User {id} username={username} email={email}'.format(id=self.id, email=self.email, username=self.username)
+        return '<User {id} email={email}>'.format(id=self.id, email=self.email)
 
     @staticmethod
     def generate_hash(plaintext_password):
