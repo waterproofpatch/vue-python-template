@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import Register from './components/Register.vue'
 import Login from './components/Login.vue'
+import store from './store'
 
 Vue.config.productionTip = false
 
@@ -10,7 +11,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios)
-// done axios
+// end axios
 
 // vue router
 import VueRouter from 'vue-router'
@@ -32,7 +33,42 @@ const router = new VueRouter({
 })
 // done vue router
 
+// axios interceptors
+axios.interceptors.request.use(function (config) {
+  // Add our access token, if we have one, to each request
+  if (store.getters.accessToken) {
+    config.headers.Authorization = 'Bearer ' + store.getters.accessToken
+  }
+  return config
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error)
+})
+
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+  // Do something with response data
+  return response
+}, function (error) {
+  // Do something with response error
+  if (error.response.status === 401) {
+    store.commit('clearAll')
+    router.push('auth?action=login')
+  }
+  if (error.response.status === 403) {
+    store.commit('clearAll')
+    router.push('auth?action=login')
+  }
+  if (error.response.status === 422) {
+    store.commit('clearAll')
+    router.push('auth?action=login')
+  }
+  return Promise.reject(error)
+})
+
+// end axios interceptors
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')
