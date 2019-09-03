@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import Register from './components/Register.vue'
 import Login from './components/Login.vue'
+import Index from './components/Index.vue'
 import store from './store'
 
 Vue.config.productionTip = false
@@ -25,6 +26,10 @@ const routes = [{
   {
     path: '/login',
     component: Login
+  },
+  {
+    path: '/index',
+    component: Index
   },
 ]
 
@@ -52,16 +57,16 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
   // Do something with response error
   if (error.response.status === 401) {
-    store.commit('clearAll')
-    router.push('auth?action=login')
+    store.commit('logout')
+    router.push('login')
   }
   if (error.response.status === 403) {
-    store.commit('clearAll')
-    router.push('auth?action=login')
+    store.commit('logout')
+    router.push('login')
   }
   if (error.response.status === 422) {
-    store.commit('clearAll')
-    router.push('auth?action=login')
+    store.commit('logout')
+    router.push('login')
   }
   return Promise.reject(error)
 })
