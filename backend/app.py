@@ -4,9 +4,10 @@ Item API backend. This is the main entry point for the app.
 """
 
 # native imports
-from backend.models import Item, User, RevokedTokenModel
 import os
 import base64
+import argparse
+import bcrypt
 
 # flask imports
 from flask import Flask, jsonify
@@ -14,8 +15,9 @@ from flask_restful import Resource, Api, reqparse, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
 
-# my imports from __init__
+# my imports, some from __init__
 from backend import jwt, api, app, db
+from backend.models import Item, User, RevokedTokenModel
 
 # globals
 PASSWORD_MIN_LEN = 13
@@ -78,7 +80,7 @@ class Login(Resource):
         user = User.query.filter_by(email=request.json['email']).first()
         if user is None:
             return {"error": "Email or password incorrect"}, 400
-        if hashpw(request.json['password'].encode(), base64.b64decode(user.password)) != base64.b64decode(user.password):
+        if bcrypt.hashpw(request.json['password'].encode(), base64.b64decode(user.password)) != base64.b64decode(user.password):
             return {"error": "Email or password incorrect"}, 400
 
         # create tokens
@@ -246,13 +248,15 @@ api.add_resource(Logout, '/api/logout')
 api.add_resource(TokenRefresh, '/api/refresh')
 
 
-def init_db():
+def init_db(drop_all=False):
     """
     Initialize the database
     """
     print("Initializing DB")
     db.init_app(app)
-    # db.drop_all()
+    if drop_all:
+        print("Dropping tables...")
+        db.drop_all()
     db.create_all()
     db.session.commit()
 
@@ -261,5 +265,11 @@ if __name__ == "__main__":
     """
     Entry point
     """
-    init_db()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--dropall', action="store_true", required=False,
+        help='drop tables in database before starting')
+    args = parser.parse_args()
+
+    init_db(drop_all=args.dropall)
     app.run(debug=True)

@@ -48,7 +48,10 @@ export default {
           password: this.password,
           passwordConfirmation: this.passwordConfirmation
         })
-        .then(response => {})
+        .then(response => {
+          this.$store.commit("setUid", response.data.uid);
+          this.$store.commit("setEmail", response.data.email);
+        })
         .catch(error => {
           this.error = error.response.data.error;
           console.log(error.response.data.error);

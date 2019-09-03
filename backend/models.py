@@ -6,7 +6,8 @@ import json
 from datetime import datetime
 
 # third party imports
-from bcrypt import gensalt, hashpw
+#from bcrypt import gensalt, hashpw
+import bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
 # my imports
@@ -57,7 +58,7 @@ class User(db.Model):
         """
         Generates and returns a salted password hash
         """
-        return hashpw(plaintext_password, gensalt())
+        return bcrypt.hashpw(plaintext_password, bcrypt.gensalt())
 
 
 class Item(db.Model):

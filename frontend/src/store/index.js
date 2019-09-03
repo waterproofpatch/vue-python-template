@@ -5,22 +5,22 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    id: null,
+    uid: null,
     email: null
   },
   getters: {
-    id: state => state.id,
+    uid: state => state.uid,
     email: state => state.email
   },
   mutations: {
-    setId(state, id) {
-      state.id = id
+    setUid(state, uid) {
+      state.uid = uid
     },
     setEmail(state, email) {
       state.email = email
     },
     clearAll(state) {
-      state.id = null
+      state.uid = null
       state.email = null
     }
   }

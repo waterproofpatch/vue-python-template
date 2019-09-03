@@ -41,7 +41,10 @@ export default {
           email: this.email,
           password: this.password
         })
-        .then(response => {})
+        .then(response => {
+          this.$store.commit("setUid", response.data.uid);
+          this.$store.commit("setEmail", response.data.email);
+        })
         .catch(error => {
           console.log(error.response.data.error);
           this.error = error.response.data.error;
