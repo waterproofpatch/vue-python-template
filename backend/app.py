@@ -74,7 +74,7 @@ class Items(Resource):
 api.add_resource(Items, '/api/items')
 
 
-def init_db(drop_all=False):
+def init_db(test_data=False, drop_all=False):
     """
     Initialize the database
     """
@@ -84,6 +84,14 @@ def init_db(drop_all=False):
         print("Dropping tables...")
         db.drop_all()
     db.create_all()
+    if test_data:
+        print("Adding test data...")
+        hashed_pw = User.generate_hash(
+            plaintext_password='passwordpassword'.encode())
+        test_user = User(email='test@gmail.com',
+                         password=base64.b64encode(hashed_pw))
+        db.session.add(test_user)
+        db.session.commit()
     db.session.commit()
 
 
@@ -95,7 +103,10 @@ if __name__ == "__main__":
     parser.add_argument(
         '--dropall', action="store_true", required=False,
         help='drop tables in database before starting')
+    parser.add_argument(
+        '--testdata', action="store_true", required=False,
+        help='create some test data')
     args = parser.parse_args()
 
-    init_db(drop_all=args.dropall)
+    init_db(test_data=args.testdata, drop_all=args.dropall)
     app.run(debug=True)
