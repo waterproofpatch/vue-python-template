@@ -1,10 +1,10 @@
 #!/bin/bash
 
 function check_error {
-if [ $result -ne 200 ]; then
-    echo "Failed."
-    exit 1
-fi
+    if [ $result -ne 200 ]; then
+        echo "Failed."
+        exit 1
+    fi
 }
 
 URL='${1}'
