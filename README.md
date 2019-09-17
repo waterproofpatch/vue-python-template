@@ -4,14 +4,14 @@ Template for setting up a simple RESTful API with authentication and backend mod
 
 ## Usage
 
-1. Start the backend:
+Start the backend:
 
 ```bash
 source venv/bin/activate
 python -m backend.app
 ```
 
-2. Start the frontend:
+Start the frontend:
 
 ```bash
 cd frontend
