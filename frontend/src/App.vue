@@ -44,4 +44,12 @@ export default {
 </script>
 
 <style>
+p {
+  color: #333333;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5625;
+  margin-bottom: 15px;
+}
 </style>
