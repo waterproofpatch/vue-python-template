@@ -4,7 +4,6 @@ Item API backend. This is the main entry point for the app.
 """
 
 # native imports
-import os
 import base64
 import argparse
 import bcrypt

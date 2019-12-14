@@ -1,18 +1,20 @@
+"""
+Authentication backend. Handles logins, registrations, logouts and tokens.
+"""
 # native imports
-import os
 import base64
-import argparse
 import bcrypt
 
 # flask imports
-from flask import Flask, jsonify
-from flask_restful import Resource, Api, reqparse, request
-from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
+from flask import jsonify
+from flask_restful import Resource, request
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, \
+    jwt_refresh_token_required, get_jwt_identity, get_raw_jwt, set_access_cookies, \
+    set_refresh_cookies, unset_jwt_cookies
 
 # my imports, some from __init__
-from backend import jwt, api, app, db
-from backend.models import Item, User, RevokedTokenModel
+from backend import jwt, api, db
+from backend.models import User, RevokedTokenModel
 
 # globals
 PASSWORD_MIN_LEN = 13
@@ -37,7 +39,9 @@ class Register(Resource):
             return {"error": "Passwords don't match"}, 400
         if len(request.get_json()['password']) <= PASSWORD_MIN_LEN:
             return {"error": "Password must be > {} characters.".format(PASSWORD_MIN_LEN)}, 400
-        if db.session.query(User.id).filter_by(email=request.get_json()['email']).scalar() is not None:
+        user = db.session.query(User.id).filter_by(
+            email=request.get_json()['email'])
+        if user.scalar() is not None:
             return {"error": "Email is already registered."}, 400
 
         hashed_pw = User.generate_hash(
