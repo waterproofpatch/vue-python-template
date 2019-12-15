@@ -8,7 +8,6 @@ from datetime import datetime
 # third party imports
 #from bcrypt import gensalt, hashpw
 import bcrypt
-from flask_sqlalchemy import SQLAlchemy
 
 # my imports
 from backend import db
