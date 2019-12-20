@@ -4,7 +4,7 @@
     <h1>Login</h1>
     test@gmail.com<br>
     passwordpassword
-    <form>
+    <form class="form1">
       <input
         placeholder="Email"
         type="text"
@@ -15,10 +15,11 @@
         type="password"
         v-model="password"
       >
-      <input
-        type="submit"
-        value="Login"
-        v-on:click.prevent="doLogin"
+        <input 
+          class="btn"
+          type="submit"
+          value="Login"
+          v-on:click.prevent="doLogin"
       >
     </form>
   </div>

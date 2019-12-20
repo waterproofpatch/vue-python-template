@@ -52,4 +52,22 @@ div {
   line-height: 1.5625;
   margin-bottom: 15px;
 }
+form.form1 {
+  margin:10px;
+  padding:20px;
+  background:lightgray;
+  width:75%;
+}
+input {
+ color: #333333;
+ font-family: "Helvetica Neue", Arial, sans-serif;
+ font-size: 16px;
+ font-weight: 300;
+ line-height: 1.5625;
+ margin-bottom: 15px;
+}
+input.btn {
+  color: white;
+  background-color: black;
+ }
 </style>

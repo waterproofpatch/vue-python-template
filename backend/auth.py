@@ -66,7 +66,6 @@ class Login(Resource):
     """
     Login endpoint
     """
-
     def post(self):
         """
         Handle a login request

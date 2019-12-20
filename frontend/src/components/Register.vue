@@ -2,7 +2,7 @@
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
     <h1>Register</h1>
-    <form>
+    <form class="form1">
       <input
         placeholder="Email"
         type="text"
@@ -19,6 +19,7 @@
         v-model="passwordConfirmation"
       >
       <input
+        class="btn"
         type="submit"
         value="Register"
         v-on:click.prevent="doRegister"
