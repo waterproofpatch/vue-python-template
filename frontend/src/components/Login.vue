@@ -2,6 +2,8 @@
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
     <h1>Login</h1>
+    test@gmail.com<br>
+    passwordpassword
     <form>
       <input
         placeholder="Email"
@@ -15,6 +17,7 @@
       >
       <input
         type="submit"
+        value="Login"
         v-on:click.prevent="doLogin"
       >
     </form>

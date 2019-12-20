@@ -20,6 +20,7 @@
       >
       <input
         type="submit"
+        value="Register"
         v-on:click.prevent="doRegister"
       >
     </form>

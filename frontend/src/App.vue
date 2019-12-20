@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style>
-p {
+div {
   color: #333333;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
