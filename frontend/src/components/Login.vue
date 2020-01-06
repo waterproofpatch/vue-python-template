@@ -2,25 +2,11 @@
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
     <h1>Login</h1>
-    test@gmail.com<br>
-    passwordpassword
-    <form class="form1">
-      <input
-        placeholder="Email"
-        type="text"
-        v-model="email"
-      >
-      <input
-        placeholder="Password"
-        type="password"
-        v-model="password"
-      >
-        <input 
-          class="btn"
-          type="submit"
-          value="Login"
-          v-on:click.prevent="doLogin"
-      >
+    <p>test@gmail.com | passwordpassword</p>
+    <form>
+      <input placeholder="Email" type="text" v-model="email">
+      <input placeholder="Password" type="password" v-model="password">
+      <input class="btn" type="submit" value="Login" v-on:click.prevent="doLogin">
     </form>
   </div>
 </template>
