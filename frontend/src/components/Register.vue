@@ -1,29 +1,16 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
-    <h1>Register</h1>
+    <p>Register</p>
     <form class="form1">
       <input
-        placeholder="Email"
-        type="text"
-        v-model="email"
-      >
+        placeholder="Email" type="text" v-model="email">
       <input
-        placeholder="Password"
-        type="password"
-        v-model="password"
-      >
+        placeholder="Password" type="password" v-model="password">
       <input
-        placeholder="Confirm Password"
-        type="password"
-        v-model="passwordConfirmation"
-      >
+        placeholder="Confirm Password" type="password" v-model="passwordConfirmation">
       <input
-        class="btn"
-        type="submit"
-        value="Register"
-        v-on:click.prevent="doRegister"
-      >
+        class="btn" type="submit" value="Register" v-on:click.prevent="doRegister">
     </form>
   </div>
 </template>

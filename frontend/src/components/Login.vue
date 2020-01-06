@@ -1,8 +1,7 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
-    <h1>Login</h1>
-    <p>test@gmail.com | passwordpassword</p>
+    <p>Login test@gmail.com | passwordpassword</p>
     <form>
       <input placeholder="Email" type="text" v-model="email">
       <input placeholder="Password" type="password" v-model="password">

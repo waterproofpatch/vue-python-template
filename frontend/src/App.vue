@@ -18,11 +18,16 @@ export default {
 </script>
 
 <style>
+div {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0em;
+  font-weight: 300;
+}
 form {
-  margin:10px;
-  padding:20px;
-  background:lightgray;
-  width:75%;
+  margin: 10px;
+  padding: 20px;
+  background: lightgray;
+  width: 75%;
 }
 input {
  color: #333333;

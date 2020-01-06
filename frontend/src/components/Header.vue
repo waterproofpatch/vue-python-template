@@ -1,9 +1,8 @@
 <template>
   <div class="header">
     <div class="banner">
-      MySite. Login state: {{$store.state.uid != null}}
+      MySite. 
     </div>
-    <nav>
       <ul>
         <li><router-link to="/index">Home</router-link></li>
         <li><router-link to="/register">Register</router-link></li>
@@ -13,7 +12,6 @@
         <li><router-link v-if="$store.state.uid != null" 
             to="/privileged">Privileged</router-link></li>
       </ul>
-    </nav>
   </div>
 </template>
 
@@ -45,17 +43,12 @@ export default {
 .header {
   display: flex;
   flex-direction: row;
+  flex-wrap: row wrap;
+  align-items: center;
   justify-content: space-between;
-  color: #333333;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 1.5625;
-  margin-bottom: 15px;
-}
-nav {
-  align-self: center;
-  margin: 0 0.8em 0 0;
+  background-color: #409fbf;
+  color: white;
+  padding: 0 0 0 1.4em;
 }
 .header ul {
   display: flex;
