@@ -1,9 +1,9 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
-    <div class="login-container">
+    <div class="auth-container">
       <p>test@gmail.com | passwordpassword</p>
-      <form class="form form-login">
+      <form class="form form-auth">
         <div class="form-field">
           <input placeholder="Email" type="text" v-model="email">
         </div>
@@ -61,60 +61,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.login-container {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
-.form-login {
-  width: 450px;
-  display: flex;
-  flex-direction: column;
-}
-.form-login input[type="text"],
-.form-login input[type="password"] {
-  border: 1px solid #888;
-}
-.form-login input[type="text"],
-.form-login input[type="password"],
-.form-login input[type="submit"] {
-  border-radius: 0.25rem;
-  padding: 1rem;
-  color: #3A3F44;  
-  background-color: #ffffff;
-  width: 100%;
-}
-.form-login input[type="text"]:focus,
-.form-login input[type="text"]:hover,
-.form-login input[type="password"]:focus,
-.form-login input[type="password"]:hover {
-  background-color: #eeeeee;
-}
-.form-login input[type="submit"] {
-  background-color: #409fbf;
-  color: white;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-.form-login input[type="submit"]:focus,
-.form-login input[type="submit"]:hover {
-  background-color: black;
-}
-.form-field {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 2rem;
-}
-input {
-  border: 0;
-  color: inherit;
-  font: inherit;
-  margin: 0;
-  outline: 0;
-  padding: 0;
-  -webkit-transition: background-color .3s;
-  transition: background-color .3s;
-}
 </style>
