@@ -81,5 +81,8 @@ axios.interceptors.response.use(function (response) {
 new Vue({
   render: h => h(App),
   router,
-  store
+  store,
+  beforeCreate() {
+    this.$store.commit('initStore');
+  }
 }).$mount('#app')

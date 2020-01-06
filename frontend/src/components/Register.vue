@@ -44,7 +44,9 @@ export default {
           passwordConfirmation: this.passwordConfirmation
         })
         .then(response => {
-          this.$store.commit("login", response.data.uid, response.data.email);
+          this.$store.commit("login", 
+            {uid: response.data.uid, email: response.data.email}
+          );
           this.$router.push("index");
         })
         .catch(error => {

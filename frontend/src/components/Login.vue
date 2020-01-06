@@ -46,7 +46,9 @@ export default {
           password: this.password
         })
         .then(response => {
-          this.$store.commit("login", response.data.uid, response.data.email);
+          this.$store.commit("login", 
+            {uid: response.data.uid, email: response.data.email}
+          );
           this.$router.push(this.prevRoute);
         })
         .catch(error => {
