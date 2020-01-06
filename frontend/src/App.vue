@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <Header></Header>
     <router-view></router-view>
   </div>
@@ -18,27 +18,19 @@ export default {
 </script>
 
 <style>
-div {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 1.0em;
-  font-weight: 300;
-}
-form {
-  margin: 10px;
-  padding: 20px;
-  background: lightgray;
-  width: 75%;
-}
-input {
- color: #333333;
- font-family: "Helvetica Neue", Arial, sans-serif;
- font-size: 16px;
- font-weight: 300;
- line-height: 1.5625;
- margin-bottom: 15px;
-}
-input.btn {
+a {
   color: white;
-  background-color: black;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+div.container {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: 300;
+  margin: auto;
 }
 </style>

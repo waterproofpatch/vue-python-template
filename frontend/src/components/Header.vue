@@ -5,9 +5,9 @@
     </div>
       <ul>
         <li><router-link to="/index">Home</router-link></li>
-        <li><router-link to="/register">Register</router-link></li>
-        <li><router-link to="/login">Login</router-link></li>
-        <li><router-link to="/index" 
+        <li><router-link v-if="$store.state.uid==null" to="/register">Register</router-link></li>
+        <li><router-link v-if="$store.state.uid==null" to="/login">Login</router-link></li>
+        <li><router-link v-if="$store.state.uid!=null" to="/index" 
             @click.native="doLogout">Logout</router-link></li>
         <li><router-link v-if="$store.state.uid != null" 
             to="/privileged">Privileged</router-link></li>
