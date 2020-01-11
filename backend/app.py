@@ -64,9 +64,9 @@ class Items(Resource):
             return {'error': 'missing field1'}, 400
         if 'jsonfield1' not in request.json:
             return {'error': 'missing jsonfield1'}, 400
-        if len(request.json['field1']) == 0:
+        if not request.json['field1']:
             return {'error': 'field1 must not be 0 length'}, 400
-        if len(request.json['jsonfield1']) == 0:
+        if not request.json['jsonfield1']:
             return {'error': 'jsonfield1 must not be 0 length'}, 400
         user = User.query.filter_by(email=get_jwt_identity()).first()
         item = Item(field1=request.json['field1'],
