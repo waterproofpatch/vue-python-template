@@ -16,7 +16,6 @@ const store = new Vuex.Store({
   },
   mutations: {
     initStore(state) {
-      console.log("init");
       if (localStorage.getItem('uid')) {
         state.uid=localStorage.getItem('uid');
       }

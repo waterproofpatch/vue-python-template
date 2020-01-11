@@ -68,10 +68,8 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     field1 = db.Column(db.String(100), unique=False, nullable=False)
     jsonfield1 = db.Column(JsonEncodedDict, unique=False, nullable=False)
-    created_on = db.Column(db.DateTime, nullable=False,
-                           default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
-                        nullable=False)
+    created_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def as_json(self):
         """

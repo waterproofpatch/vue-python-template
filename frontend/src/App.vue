@@ -19,21 +19,24 @@ export default {
 
 <style>
 a {
-  color: white;
   text-decoration: none;
 }
 a:hover {
   text-decoration: underline;
 }
+a:visited {
+  text-decoration: none;
+}
 div.container {
   display: flex;
   flex-direction: column;
   width: 800px;
+  color: black;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 300;
   margin: auto;
 }
-.auth-container {
+.form-container {
   align-items: center;
   display: flex;
   flex-direction: column;

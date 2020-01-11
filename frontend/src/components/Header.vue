@@ -59,4 +59,11 @@ export default {
   padding: 0 1.4em 0 0;
   font-size: 0.9em;
 }
+a {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 </style>

@@ -60,6 +60,14 @@ class Items(Resource):
         """
         Create a new item
         """
+        if 'field1' not in request.json:
+            return {'error': 'missing field1'}, 400
+        if 'jsonfield1' not in request.json:
+            return {'error': 'missing jsonfield1'}, 400
+        if len(request.json['field1']) == 0:
+            return {'error': 'field1 must not be 0 length'}, 400
+        if len(request.json['jsonfield1']) == 0:
+            return {'error': 'jsonfield1 must not be 0 length'}, 400
         user = User.query.filter_by(email=get_jwt_identity()).first()
         item = Item(field1=request.json['field1'],
                     jsonfield1=request.json['jsonfield1'],
@@ -85,8 +93,7 @@ def init_db(test_data=False, drop_all=False):
     db.create_all()
     if test_data:
         print("Adding test data...")
-        hashed_pw = User.generate_hash(
-            plaintext_password='passwordpassword'.encode())
+        hashed_pw = User.generate_hash(plaintext_password='passwordpassword'.encode())
         test_user = User(email='test@gmail.com',
                          password=base64.b64encode(hashed_pw))
         db.session.add(test_user)
@@ -99,11 +106,9 @@ if __name__ == "__main__":
     Entry point
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '--dropall', action="store_true", required=False,
+    parser.add_argument( '--dropall', action="store_true", required=False,
         help='drop tables in database before starting')
-    parser.add_argument(
-        '--testdata', action="store_true", required=False,
+    parser.add_argument( '--testdata', action="store_true", required=False,
         help='create some test data')
     args = parser.parse_args()
 

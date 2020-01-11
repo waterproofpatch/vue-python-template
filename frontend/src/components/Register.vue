@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
-    <div class="auth-container">
+    <div class="form-container">
       <p>Register</p>
       <form class="form form-auth">
         <div class="form-field">

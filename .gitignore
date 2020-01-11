@@ -11,3 +11,6 @@ venv
 *.db
 Untitled.code-workspace
 vue-python-template.code-workspace
+
+# node stuff
+node_modules
