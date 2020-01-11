@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
-    <p>Add Item</p>
+    <p>
     <div class="form-container">
       <form class="form form-item">
         <div class="form-field">
@@ -18,6 +18,7 @@
         </div>
       </form>
     </div>
+  </p>
   </div>
 </template>
 
