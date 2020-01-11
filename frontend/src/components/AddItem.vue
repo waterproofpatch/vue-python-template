@@ -8,10 +8,10 @@
           <input placeholder="Field1" type="text" v-model="newItem.field1">
         </div>
         <div class="form-field">
-          <input placeholder="JsonFieldAttributeA" type="text" v-model="newItem.attributes.jsonFieldAttributeA">
+          <input placeholder="JsonFieldAttributeA" type="text" v-model="newItem.attributes.attributeA">
         </div>
         <div class="form-field">
-          <input placeholder="JsonFieldBttributeB" type="text" v-model="newItem.attributes.jsonFieldBttributeB">
+          <input placeholder="JsonFieldAttributeB" type="text" v-model="newItem.attributes.attributeB">
         </div>
         <div class="form-field">
         <input class="btn" type="submit" value="Add" v-on:click.prevent="addItem">
@@ -46,11 +46,10 @@ export default {
   },
   methods: {
     addItem() {
-      console.log("clicked, have "+ this.newItem.field1);
       this.axios
         .post("/api/items", {
           field1: this.newItem.field1,
-          not_jsonfield1: this.newItem.attributes
+          jsonfield1: this.newItem.attributes
         })
         .then(response => {
           console.log("got response " + response.data[9].field1);

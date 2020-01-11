@@ -50,8 +50,12 @@ export default {
           this.$router.push("index");
         })
         .catch(error => {
-          this.error = error.response.data.error;
-          console.log(error.response.data.error);
+          if (error.response.status == 400) {
+            this.error = error.response.data.error;
+          }
+          else {
+            this.error = error.response.status;
+          }
         })
         .finally(response => {});
     }
