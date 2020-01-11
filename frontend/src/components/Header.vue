@@ -1,17 +1,18 @@
 <template>
   <div class="header">
     <div class="banner">
-      MySite. 
+      MySite
     </div>
+    <div class="navlinks">
       <ul>
         <li><router-link to="/index">Home</router-link></li>
-        <li><router-link v-if="$store.state.uid==null" to="/register">Register</router-link></li>
-        <li><router-link v-if="$store.state.uid==null" to="/login">Login</router-link></li>
-        <li><router-link v-if="$store.state.uid!=null" to="/index" 
+        <li v-if="$store.state.uid==null"><router-link to="/register">Register</router-link></li>
+        <li v-if="$store.state.uid==null"><router-link to="/login">Login</router-link></li>
+        <li v-if="$store.state.uid!=null"><router-link to="/index" 
             @click.native="doLogout">Logout</router-link></li>
-        <li><router-link v-if="$store.state.uid != null" 
-            to="/items">Items</router-link></li>
+        <li v-if="$store.state.uid!=null"><router-link to="/items">Items</router-link></li>
       </ul>
+    </div>
   </div>
 </template>
 
