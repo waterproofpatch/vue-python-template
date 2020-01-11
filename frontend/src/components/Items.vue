@@ -77,7 +77,6 @@ export default {
 }
 .cards {
   justify-content: space-between;
-  padding:20px;
   display: flex;
   flex-wrap: wrap;
  }

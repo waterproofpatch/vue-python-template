@@ -3,14 +3,23 @@
     <div class="banner">
       MySite
     </div>
-    <div class="navlinks">
+    <div>
       <ul>
-        <li><router-link to="/index">Home</router-link></li>
-        <li v-if="$store.state.uid==null"><router-link to="/register">Register</router-link></li>
-        <li v-if="$store.state.uid==null"><router-link to="/login">Login</router-link></li>
-        <li v-if="$store.state.uid!=null"><router-link to="/index" 
-            @click.native="doLogout">Logout</router-link></li>
-        <li v-if="$store.state.uid!=null"><router-link to="/items">Items</router-link></li>
+        <li>
+          <router-link to="/index">Home</router-link>
+        </li>
+        <li v-if="$store.state.uid!=null">
+          <router-link to="/items">Items</router-link>
+        </li>
+        <li v-if="$store.state.uid==null">
+          <router-link to="/register">Register </router-link>
+        </li>
+        <li v-if="$store.state.uid==null">
+          <router-link to="/login">Login</router-link>
+        </li>
+        <li v-if="$store.state.uid!=null">
+          <router-link to="/index" @click.native="doLogout">Logout</router-link>
+        </li>
       </ul>
     </div>
   </div>

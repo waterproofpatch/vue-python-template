@@ -30,7 +30,7 @@ a:visited {
 }
 div.container {
   display: flex;
-  background: #f7f7f7;
+  background: var(--main-bg-color);
   flex-direction: column;
   width: 800px;
   color: black;
