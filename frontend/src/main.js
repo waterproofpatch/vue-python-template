@@ -3,7 +3,7 @@ import App from './App.vue'
 import Register from './components/Register.vue'
 import Login from './components/Login.vue'
 import Index from './components/Index.vue'
-import Privileged from './components/Privileged.vue'
+import Items from './components/Items.vue'
 
 // font-awesome stuff
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -41,8 +41,8 @@ const routes = [{
     component: Index
   },
   {
-    path: '/privileged',
-    component: Privileged
+    path: '/items',
+    component: Items
   },
 ]
 

@@ -25,7 +25,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: "Privileged",
+  name: "Items",
   props: {},
   data() {
     return {

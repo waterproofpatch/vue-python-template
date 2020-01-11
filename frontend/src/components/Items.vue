@@ -30,7 +30,7 @@
 /* eslint-disable */
 import AddItem from './AddItem.vue'
 export default {
-  name: "Privileged",
+  name: "Items",
   components: {
     AddItem
   },

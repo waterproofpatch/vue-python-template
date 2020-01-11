@@ -10,7 +10,7 @@
         <li><router-link v-if="$store.state.uid!=null" to="/index" 
             @click.native="doLogout">Logout</router-link></li>
         <li><router-link v-if="$store.state.uid != null" 
-            to="/privileged">Privileged</router-link></li>
+            to="/items">Items</router-link></li>
       </ul>
   </div>
 </template>
