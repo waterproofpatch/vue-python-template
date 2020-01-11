@@ -1,0 +1,6 @@
+/* theme colors */
+:root {
+  --button-bg-color: #409FBF;
+  --input-border-color: #3A3F44;
+  --input-hover-bg-color: #eeeeee;
+}

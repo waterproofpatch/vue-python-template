@@ -85,7 +85,7 @@ export default {
 .form-item input[type="submit"] {
   border-radius: 0.25rem;
   padding: 1rem;
-  color: #3A3F44;  
+  color: var(--input-border-color);
   background-color: #ffffff;
   width: 100%;
 }
@@ -93,10 +93,10 @@ export default {
 .form-item input[type="text"]:hover,
 .form-item input[type="password"]:focus,
 .form-item input[type="password"]:hover {
-  background-color: #eeeeee;
+  background-color: var(--input-hover-bg-color);
 }
 .form-item input[type="submit"] {
-  background-color: #409fbf;
+  background-color: var(--button-bg-color);
   color: white;
   font-weight: bold;
   text-transform: uppercase;

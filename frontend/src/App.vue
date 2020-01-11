@@ -18,6 +18,7 @@ export default {
 </script>
 
 <style>
+@import './assets/theme.css';
 a {
   text-decoration: none;
 }
