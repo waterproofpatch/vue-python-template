@@ -49,6 +49,14 @@ class Items(Resource):
         """
         Update an existing item
         """
+        if 'field1' not in request.json:
+            return {'error': 'missing field1'}, 400
+        if 'jsonfield1' not in request.json:
+            return {'error': 'missing jsonfield1'}, 400
+        if not request.json['field1']:
+            return {'error': 'field1 must not be 0 length'}, 400
+        if not request.json['jsonfield1']:
+            return {'error': 'jsonfield1 must not be 0 length'}, 400
         item = Item.query.get(request.json['id'])
         item.field1 = request.json['field1']
         item.jsonfield1 = request.json['jsonfield1']

@@ -52,7 +52,7 @@ export default {
           jsonfield1: this.newItem.attributes
         })
         .then(response => {
-          console.log("got response " + response.data[9].field1);
+          console.log("got response " + response);
         })
         .catch(error => {
           if (error.response.status == 400) {
