@@ -1,26 +1,28 @@
 <template>
   <div class="header">
-    <div>
-      MySite
-    </div>
-    <div>
-      <ul>
-        <li>
-          <router-link to="/index">Home</router-link>
-        </li>
-        <li v-if="$store.state.uid!=null">
-          <router-link to="/items">Items</router-link>
-        </li>
-        <li v-if="$store.state.uid==null">
-          <router-link to="/register">Register </router-link>
-        </li>
-        <li v-if="$store.state.uid==null">
-          <router-link to="/login">Login</router-link>
-        </li>
-        <li v-if="$store.state.uid!=null">
-          <router-link to="/index" @click.native="doLogout">Logout</router-link>
-        </li>
-      </ul>
+    <div class="inner-header">
+      <div>
+        MySite
+      </div>
+      <div>
+        <ul>
+          <li>
+            <router-link to="/index">Home</router-link>
+          </li>
+          <li v-if="$store.state.uid!=null">
+            <router-link to="/items">Items</router-link>
+          </li>
+          <li v-if="$store.state.uid==null">
+            <router-link to="/register">Register </router-link>
+          </li>
+          <li v-if="$store.state.uid==null">
+            <router-link to="/login">Login</router-link>
+          </li>
+          <li v-if="$store.state.uid!=null">
+            <router-link to="/index" @click.native="doLogout">Logout</router-link>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -51,21 +53,22 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .header {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: row wrap;
-  align-items: center;
-  justify-content: space-between;
   background-color: #409fbf;
+  width: 100%;
+}
+.inner-header {
   color: white;
   padding: 0 0 0 1.4em;
-}
-.header ul {
   display: flex;
-  flex-flow: row wrap;
-  list-style-type: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
-.header ul li {
+.inner-header ul {
+  list-style-type: none;
+  display: flex;
+}
+.inner-header ul li {
   padding: 0 1.4em 0 0;
   font-size: 0.9em;
 }

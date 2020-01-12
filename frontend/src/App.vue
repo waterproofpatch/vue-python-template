@@ -1,7 +1,9 @@
 <template>
   <div id="app" class="container">
     <Header></Header>
-    <router-view></router-view>
+    <div class="inner-container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -32,11 +34,15 @@ div.container {
   display: flex;
   background: var(--main-bg-color);
   flex-direction: column;
-  width: 800px;
+  align-items: center;
+  width: 100%;
   color: black;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 300;
   margin: auto;
+}
+div.inner-container {
+  width: 60%;
 }
 .form-container {
   align-items: center;
