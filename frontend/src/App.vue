@@ -44,7 +44,7 @@ div.container {
   flex-direction: column;
 }
 .form-auth {
-  width: 450px;
+  width: 600px;
   display: flex;
   flex-direction: column;
 }
