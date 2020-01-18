@@ -10,7 +10,7 @@
     </p>
 
     <section v-if="!showAddComponent" class="cards">
-      <div v-for="item in items" v-bind:key="item.id" class="card">
+      <div v-for="item in items" v-bind:key="item.id" class="card" v-on:click="selectItem(item.id)">
         <div class="card-header">header</div>
         <div class="card-main">
           <div class="main-description">
@@ -21,6 +21,7 @@
     </section>
 
     <AddItem v-if="showAddComponent"/>
+    <p v-if="selectedItemId">Selected item {{selectedItemId}}</p>
 
     <!-- <p align="center"><button v-on:click="addItem">Add</button></p> -->
   </div>
@@ -39,6 +40,7 @@ export default {
     return {
       items: [],
       showAddComponent: false,
+      selectedItemId: null,
       error: null
     };
   },
@@ -59,6 +61,10 @@ export default {
       .finally(() => {});
   },
   methods: {
+    selectItem: function(id) {
+      alert('selected item ' + id);
+      this.selectedItemId = id;
+    }
   }
 };
 </script>
