@@ -55,6 +55,7 @@ export default {
 .header {
   background-color: #409fbf;
   width: 100%;
+  height: 7em;
 }
 .inner-header {
   color: white;

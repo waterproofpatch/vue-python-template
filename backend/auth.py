@@ -123,8 +123,8 @@ class Profile(Resource):
         """
         user = User.query.filter_by(email=get_raw_jwt()['identity']).first()
         return {
-                   'email': user.email,
-               }, 200
+            'email': user.email,
+        }, 200
 
     # TODO may need fresh token
     @jwt_required
