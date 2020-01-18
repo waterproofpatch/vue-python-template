@@ -78,8 +78,8 @@ class Login(Resource):
         user = User.query.filter_by(email=request.json['email']).first()
         if user is None:
             return {"error": "Email or password incorrect"}, 400
-        if bcrypt.hashpw(request.json['password'].encode(),\
-                base64.b64decode(user.password)) != base64.b64decode(user.password):
+        if bcrypt.hashpw(request.json['password'].encode(),
+                         base64.b64decode(user.password)) != base64.b64decode(user.password):
             return {"error": "Email or password incorrect"}, 400
 
         # create tokens
@@ -137,7 +137,7 @@ class Profile(Resource):
         user = User.query.filter_by(email=get_raw_jwt()['identity']).first()
         if user is None:
             return {"error": "Email or password incorrect"}, 400
-        if hashpw(request.json['password'].encode(), base64.b64decode(user.password)) != base64.b64decode(user.password):
+        if bcrypt.hashpw(request.json['password'].encode(), base64.b64decode(user.password)) != base64.b64decode(user.password):
             return {"error": "Email or password incorrect"}, 400
         if len(request.json['email']) == 0:
             return {"error": "Email must be at least one character"}, 400
