@@ -12,8 +12,8 @@ from flask_restful import Resource, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 # my imports, some from __init__
-from backend import jwt, api, app, db
-from backend.models import Item, User, RevokedTokenModel
+from backend import api, app, db, auth
+from backend.models import Item, User
 
 
 class Items(Resource):
@@ -97,7 +97,8 @@ def init_db(test_data=False, drop_all=False):
     db.create_all()
     if test_data:
         print("Adding test data...")
-        hashed_pw = User.generate_hash(plaintext_password='passwordpassword'.encode())
+        hashed_pw = User.generate_hash(
+            plaintext_password='passwordpassword'.encode())
         test_user = User(email='test@gmail.com',
                          password=base64.b64encode(hashed_pw))
         db.session.add(test_user)
@@ -110,10 +111,10 @@ if __name__ == "__main__":
     Entry point
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument( '--dropall', action="store_true", required=False,
-        help='drop tables in database before starting')
-    parser.add_argument( '--testdata', action="store_true", required=False,
-        help='create some test data')
+    parser.add_argument('--dropall', action="store_true", required=False,
+                        help='drop tables in database before starting')
+    parser.add_argument('--testdata', action="store_true", required=False,
+                        help='create some test data')
     args = parser.parse_args()
 
     init_db(test_data=args.testdata, drop_all=args.dropall)

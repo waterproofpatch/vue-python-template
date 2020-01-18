@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 # native imports
 import os
-import base64
 
 # flask imports
-from flask import Flask, jsonify
-from flask_restful import Resource, Api, reqparse, request
+from flask import Flask
+from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
+from flask_jwt_extended import JWTManager
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
