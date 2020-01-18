@@ -66,6 +66,7 @@ class Login(Resource):
     """
     Login endpoint
     """
+
     def post(self):
         """
         Handle a login request
@@ -96,6 +97,7 @@ class Logout(Resource):
     """
     Revoke the access token
     """
+
     @jwt_required
     def post(self):
         """
@@ -113,6 +115,7 @@ class Profile(Resource):
     """
     Profile endpoint
     """
+
     @jwt_required
     def get(self):
         """
@@ -120,8 +123,8 @@ class Profile(Resource):
         """
         user = User.query.filter_by(email=get_raw_jwt()['identity']).first()
         return {
-            'email': user.email,
-        }, 200
+                   'email': user.email,
+               }, 200
 
     # TODO may need fresh token
     @jwt_required
@@ -137,12 +140,14 @@ class Profile(Resource):
         user = User.query.filter_by(email=get_raw_jwt()['identity']).first()
         if user is None:
             return {"error": "Email or password incorrect"}, 400
-        if bcrypt.hashpw(request.json['password'].encode(), base64.b64decode(user.password)) != base64.b64decode(user.password):
+        if bcrypt.hashpw(request.json['password'].encode(), base64.b64decode(user.password)) != base64.b64decode(
+                user.password):
             return {"error": "Email or password incorrect"}, 400
         if len(request.json['email']) == 0:
             return {"error": "Email must be at least one character"}, 400
 
-        if request.json['email'] != user.email and db.session.query(User.id).filter_by(email=request.json['email']).scalar() is not None:
+        if request.json['email'] != user.email and db.session.query(User.id).filter_by(
+                email=request.json['email']).scalar() is not None:
             return {"error": "Email is already registered."}, 400
         user.email = request.json['email']
         db.session.commit()
@@ -153,6 +158,7 @@ class TokenRefresh(Resource):
     """
     Refresh endpoint
     """
+
     @jwt_refresh_token_required
     def post(self):
         """
