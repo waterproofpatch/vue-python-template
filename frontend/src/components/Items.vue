@@ -2,14 +2,14 @@
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
 
-    <p v-if="!showAddComponent">
+    <p v-if="!showAddComponent && !selectedItemId">
       <a href="#" v-on:click="showAddComponent=true">Add</a>
     </p>
     <p v-else>
-      <a href="#" v-on:click="showAddComponent=false">Back</a>
+      <a href="#" v-on:click="showAddComponent=false; selectedItemId=false">Back</a>
     </p>
 
-    <section v-if="!showAddComponent" class="cards">
+    <section v-if="!showAddComponent && !selectedItemId" class="cards">
       <div v-for="item in items" v-bind:key="item.id" class="card" v-on:click="selectItem(item.id)">
         <div class="card-header">header</div>
         <div class="card-main">
@@ -21,7 +21,7 @@
     </section>
 
     <AddItem v-if="showAddComponent"/>
-    <p v-if="selectedItemId">Selected item {{selectedItemId}}</p>
+    <Item v-if="selectedItemId" v-bind:item-id="selectedItemId"/>
 
     <!-- <p align="center"><button v-on:click="addItem">Add</button></p> -->
   </div>
@@ -30,10 +30,12 @@
 <script>
 /* eslint-disable */
 import AddItem from './AddItem.vue'
+import Item from './Item.vue'
 export default {
   name: "Items",
   components: {
-    AddItem
+    AddItem, 
+    Item
   },
   props: {},
   data() {
@@ -62,7 +64,6 @@ export default {
   },
   methods: {
     selectItem: function(id) {
-      alert('selected item ' + id);
       this.selectedItemId = id;
     }
   }
