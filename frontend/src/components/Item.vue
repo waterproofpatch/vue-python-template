@@ -1,10 +1,7 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
-    <p>
-      an item
-      <p v-if="itemId">Item {{itemId}}</p>
-    </p>
+    <p v-if="itemId">Item {{itemId}}</p>
   </div>
 </template>
 
