@@ -1,24 +1,25 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{error}}</h2>
-    <p>
     <div class="form-container">
       <form class="form form-item">
         <div class="form-field">
           <input placeholder="Field1" type="text" v-model="newItem.field1">
         </div>
         <div class="form-field">
-          <input placeholder="JsonFieldAttributeA" type="text" v-model="newItem.attributes.attributeA">
+          <input placeholder="JsonFieldAttributeA" type="text" 
+            v-model="newItem.attributes.attributeA">
         </div>
         <div class="form-field">
-          <input placeholder="JsonFieldAttributeB" type="text" v-model="newItem.attributes.attributeB">
+          <input placeholder="JsonFieldAttributeB" type="text" 
+            v-model="newItem.attributes.attributeB">
         </div>
         <div class="form-field">
-        <input class="btn" type="submit" value="Add" v-on:click.prevent="addItem">
+          <input class="btn" type="submit" value="Add" 
+            v-on:click.prevent="addItem">
         </div>
       </form>
     </div>
-  </p>
   </div>
 </template>
 
