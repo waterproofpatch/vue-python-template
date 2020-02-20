@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
 Item API backend. This is the main entry point for the app.
+
+UWSGI: module: app(.py), callable: app
 """
 
 # native imports

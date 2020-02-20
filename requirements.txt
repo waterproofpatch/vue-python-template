@@ -7,3 +7,4 @@ pytest==4.4.0
 pytest-cov==2.6.1
 pylint-flask==0.6
 pylint-flask-sqlalchemy==0.1.0
+uwsgi==2.0.18

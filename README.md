@@ -24,3 +24,11 @@ npm run serve
 docker build -t . vue-python-template
 docker run -p 8080:80 vue-python-template
 ```
+
+### Test UWSGI:
+
+```
+uwsgi --socket 0.0.0.0:5000 --protocol=http --wsgi-file backend/app.py --callable app --virtualenv ./venv
+```
+
+
