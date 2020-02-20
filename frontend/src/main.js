@@ -5,13 +5,6 @@ import Login from './components/Login.vue'
 import Index from './components/Index.vue'
 import Items from './components/Items.vue'
 
-// font-awesome stuff
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-library.add(faPlus)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
-
 import store from './store'
 
 Vue.config.productionTip = false
