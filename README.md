@@ -29,6 +29,8 @@ docker run -p 8080:80 vue-python-template
 
 ```
 uwsgi --socket 0.0.0.0:5000 --protocol=http --wsgi-file backend/app.py --callable app --virtualenv ./venv
+# or using wsgi ini file
+uwsgi --ini wsgi.ini
 ```
 
 
