@@ -6,6 +6,7 @@ venv
 
 #editor stuff
 .vscode
+tags
 
 # database stuff
 *.db
@@ -14,3 +15,4 @@ vue-python-template.code-workspace
 
 # node stuff
 node_modules
+
