@@ -21,7 +21,7 @@ npm run serve
 ### Build docker container:
 
 ```
-docker build -t . vue-python-template
+docker build . -t vue-python-template
 docker run -p 8080:80 vue-python-template
 ```
 
