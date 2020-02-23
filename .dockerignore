@@ -1,2 +1,6 @@
 node_modules
 *.sock
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+.git
+.gitignore
