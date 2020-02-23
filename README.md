@@ -33,4 +33,10 @@ uwsgi --socket 0.0.0.0:5000 --protocol=http --wsgi-file backend/app.py --callabl
 uwsgi --ini wsgi.ini
 ```
 
+### EB Test:
 
+```
+eb init -p docker vue-python-template
+eb local run --port 5000
+eb open
+```
