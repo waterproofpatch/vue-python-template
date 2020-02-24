@@ -6,6 +6,7 @@ UWSGI: module: app(.py), callable: app
 """
 
 # native imports
+import sys
 import base64
 import argparse
 
@@ -117,7 +118,12 @@ if __name__ == "__main__":
                         help='drop tables in database before starting')
     parser.add_argument('--testdata', action="store_true", required=False,
                         help='create some test data')
+    parser.add_argument('--init', action="store_true", required=False,
+                        help='just init database and do nothing else')
     args = parser.parse_args()
 
+    if args.init:
+        init_db(test_data=args.testdata, drop_all=args.dropall)
+        sys.exit(0)
     init_db(test_data=args.testdata, drop_all=args.dropall)
     app.run(debug=True)
