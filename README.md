@@ -2,7 +2,16 @@
 
 Template for setting up a simple RESTful API with authentication and backend models using Python's Flask microframework and VueJS for the frontend.
 
-## Usage
+## Requirements:
+
+* eb ```brew install eb```
+* docker
+* nginx
+* uwsgi
+
+## Development
+
+Start the app in debug mode for testing
 
 ### Start the backend:
 
@@ -18,11 +27,18 @@ cd frontend
 npm run serve
 ```
 
+## Production
+
+Deploy to production using AWS Beanstalk and Docker Hub.
+
 ### Build docker container:
 
 ```
-docker build . -t vue-python-template
-docker run -p 8080:80 vue-python-template
+docker build . -t waterproofpatch/vue-python-template
+# test docker instance
+docker run -p 8080:80 waterproofpatch/vue-python-template
+# deploy to docker hub
+docker push waterproofpatch/vue-python-template
 ```
 
 ### Test UWSGI:
@@ -39,4 +55,8 @@ uwsgi --ini wsgi.ini
 eb init -p docker vue-python-template
 eb local run --port 5000
 eb open
+# then to deploy:
+eb deploy VuePythonTemplate-env
 ```
+
+
