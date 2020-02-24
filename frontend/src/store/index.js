@@ -30,8 +30,8 @@ const store = new Vuex.Store({
       state.email = email;
     },
     logout(state) {
-      state.uid = null
-      state.email = null
+      state.uid = null;
+      state.email = null;
       localStorage.removeItem('email');
       localStorage.removeItem('uid');
     }
