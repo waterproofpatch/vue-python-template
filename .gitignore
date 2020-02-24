@@ -7,6 +7,7 @@ venv
 #editor stuff
 .vscode
 tags
+tags.*
 
 # database stuff
 *.db
