@@ -48,7 +48,7 @@ export default {
         })
         .finally(() => {
           this.$store.commit("logout");
-          console.log("Done.");
+          console.log("done");
         });
     }
   }
