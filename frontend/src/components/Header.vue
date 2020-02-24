@@ -41,10 +41,15 @@ export default {
       this.axios
         .post("/api/logout", {})
         .then(() => {
-          this.$store.commit("logout");
+          console.log("success");
         })
-        .catch(() => {})
-        .finally(() => {});
+        .catch(() => {
+          console.log("error");
+        })
+        .finally(() => {
+          this.$store.commit("logout");
+          console.log("Done.");
+        });
     }
   }
 };
