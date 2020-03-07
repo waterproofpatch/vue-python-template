@@ -63,10 +63,10 @@ export default {
 .header {
   background-color: #409fbf;
   width: 100%;
-  height: 5em;
 }
 .inner-header {
   color: white;
+  height: 5em;
   padding: 0 0 0 1.4em;
   display: flex;
   flex-direction: row;
