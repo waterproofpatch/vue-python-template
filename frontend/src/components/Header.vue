@@ -72,6 +72,7 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  font-size: 1.2em;
 }
 .inner-header ul {
   list-style-type: none;
