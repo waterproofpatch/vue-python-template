@@ -19,7 +19,10 @@
             <router-link to="/login">Login</router-link>
           </li>
           <li v-if="$store.state.uid!=null">
-            <router-link to="/index" @click.native="doLogout">Logout</router-link>
+            <router-link
+              to="/index"
+              @click.native="doLogout"
+            >Logout</router-link>
           </li>
         </ul>
       </div>
@@ -60,7 +63,7 @@ export default {
 .header {
   background-color: #409fbf;
   width: 100%;
-  height: 7em;
+  height: 5em;
 }
 .inner-header {
   color: white;
