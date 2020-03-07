@@ -4,10 +4,10 @@ Template for setting up a simple RESTful API with authentication and backend mod
 
 ## Requirements:
 
-* eb ```brew install eb```
-* docker
-* nginx
-* uwsgi
+- eb `brew install eb`
+- docker
+- nginx
+- uwsgi
 
 ## Development
 
@@ -23,8 +23,7 @@ python -m backend.app
 ### Start the frontend:
 
 ```bash
-cd frontend
-npm run serve
+(cd frontend && npm run serve)
 ```
 
 ## Production
@@ -58,5 +57,3 @@ eb open
 # then to deploy:
 eb deploy VuePythonTemplate-env
 ```
-
-
