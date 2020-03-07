@@ -61,10 +61,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .header {
-  background-color: #409fbf;
   width: 100%;
 }
 .inner-header {
+  background-color: #409fbf;
   color: white;
   height: 5em;
   padding: 0 0 0 1.4em;
