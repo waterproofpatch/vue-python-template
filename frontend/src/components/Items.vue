@@ -1,20 +1,24 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{ error }}</h2>
-
-    <p v-if="!showAddComponent && !selectedItemId">
-      <a href="#" v-on:click="showAddComponent = true">Add</a>
-    </p>
-    <p v-else>
-      <a
-        href="#"
-        v-on:click="
-          showAddComponent = false;
-          selectedItemId = false;
-        "
-        >Back</a
-      >
-    </p>
+    <center>
+      <div v-if="!showAddComponent && !selectedItemId">
+        <button class="button-add" v-on:click="showAddComponent = true">
+          Add
+        </button>
+      </div>
+      <div v-else>
+        <button
+          class="button-add"
+          v-on:click="
+            showAddComponent = false;
+            selectedItemId = false;
+          "
+        >
+          Back
+        </button>
+      </div>
+    </center>
     <p v-if="items.length == 0">Nothing here!</p>
 
     <section v-if="!showAddComponent && !selectedItemId" class="cards">
@@ -111,7 +115,7 @@ export default {
   overflow: hidden; /* Fixes the corners */
   margin: 5px; /* Add space between cards */
   background: white;
-  box-shadow: 1px 2px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 1px 2px rgba(0, 0, 0, 0.1); */
 }
 
 .card-header {
