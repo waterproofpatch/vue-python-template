@@ -28,7 +28,14 @@
         class="card"
         v-on:click="selectItem(item.id)"
       >
-        <div class="card-header">header</div>
+        <div class="card-header">
+          <div>
+            header
+          </div>
+          <div>
+            delete
+          </div>
+        </div>
         <div class="card-main">
           <div class="main-description">
             {{ item }}
@@ -81,6 +88,30 @@ export default {
       .finally(() => {});
   },
   methods: {
+    deleteItem: function(id) {
+      console.log("called delete");
+      this.axios
+        .delete("/api/items", {
+          id: id
+        })
+        .then(response => {
+          if (response.status == 200) {
+            this.success = "Item removed.";
+          } else {
+            this.success = null;
+          }
+        })
+        .catch(error => {
+          if (error.response.status == 400) {
+            this.error = error.response.data.error;
+            this.success = null;
+          } else {
+            this.error = error.response.status;
+            this.success = null;
+          }
+        })
+        .finally(response => {});
+    },
     selectItem: function(id) {
       this.selectedItemId = id;
     }
@@ -119,10 +150,12 @@ export default {
 }
 
 .card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   color: white;
-  text-align: center;
   font-weight: 600;
-  border-bottom: 1px solid #409fbf;
+  /* border-bottom: 1px solid #409fbf; */
   background-color: #409fbf;
   padding: 5px 10px;
 }
