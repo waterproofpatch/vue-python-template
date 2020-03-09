@@ -45,7 +45,11 @@
     </section>
 
     <AddItem v-if="showAddComponent" />
-    <Item v-if="selectedItemId" v-bind:item-id="selectedItemId" />
+    <Item
+      v-on:delete-item="deleteItem"
+      v-if="selectedItemId"
+      v-bind:item-id="selectedItemId"
+    />
 
     <!-- <p align="center"><button v-on:click="addItem">Add</button></p> -->
   </div>
@@ -89,7 +93,7 @@ export default {
   },
   methods: {
     deleteItem: function(id) {
-      console.log("called delete");
+      console.log("called delete on id " + id);
       this.axios
         .delete("/api/items", {
           id: id

@@ -2,8 +2,8 @@
   <div>
     <h2 v-if="error">Error: {{ error }}</h2>
     <p v-if="itemId">Item {{ itemId }}</p>
-    <button class="button-delete" v-on:click="$emit('deleteItem', itemId)">
-      " Remove
+    <button class="button-delete" v-on:click="$emit('delete-item', itemId)">
+      Remove
     </button>
   </div>
 </template>
