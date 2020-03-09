@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Header from './components/Header.vue'
+import Header from "./components/Header.vue";
 
 export default {
   name: "app",
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style>
-@import './assets/theme.css';
+@import "./assets/theme.css";
 a {
   text-decoration: none;
 }
@@ -63,7 +63,7 @@ div.inner-container {
 .form-auth input[type="submit"] {
   border-radius: 0.25rem;
   padding: 1rem;
-  color: #3A3F44;  
+  color: #3a3f44;
   background-color: #ffffff;
   width: 100%;
 }
@@ -97,7 +97,31 @@ input {
   margin: 0;
   outline: 0;
   padding: 0;
-  -webkit-transition: background-color .3s;
-  transition: background-color .3s;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+.button-delete {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.button-add {
+  background-color: var(--button-bg-color);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 </style>
