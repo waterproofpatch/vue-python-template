@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h2 v-if="error">Error: {{error}}</h2>
-    <p v-if="itemId">Item {{itemId}}</p>
+    <h2 v-if="error">Error: {{ error }}</h2>
+    <p v-if="itemId">Item {{ itemId }}</p>
+    <button class="button-delete" v-on:click="deleteItem(itemId)">
+      Remove
+    </button>
   </div>
 </template>
 
@@ -9,7 +12,7 @@
 /* eslint-disable */
 export default {
   name: "Item",
-  props: ['itemId'],
+  props: ["itemId"],
   data() {
     return {
       error: null
@@ -22,10 +25,33 @@ export default {
     }
   },
   methods: {
+    deleteItem: function(id) {
+      console.log("called delete");
+      this.axios
+        .delete("/api/items", {
+          id: id
+        })
+        .then(response => {
+          if (response.status == 200) {
+            this.success = "Item removed.";
+          } else {
+            this.success = null;
+          }
+        })
+        .catch(error => {
+          if (error.response.status == 400) {
+            this.error = error.response.data.error;
+            this.success = null;
+          } else {
+            this.error = error.response.status;
+            this.success = null;
+          }
+        })
+        .finally(response => {});
+    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>
