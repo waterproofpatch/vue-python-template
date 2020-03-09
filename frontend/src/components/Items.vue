@@ -95,17 +95,17 @@ export default {
     deleteItem: function(id) {
       console.log("called delete on id " + id);
       this.axios
-        .delete("/api/items", {
-          id: id
-        })
+        .delete("/api/items?id=" + id)
         .then(response => {
           if (response.status == 200) {
             this.success = "Item removed.";
           } else {
             this.success = null;
+            console.log("some unexpected response");
           }
         })
         .catch(error => {
+          console.log("error return code was: " + error.response.status);
           if (error.response.status == 400) {
             this.error = error.response.data.error;
             this.success = null;

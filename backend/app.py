@@ -28,9 +28,11 @@ class Items(Resource):
         """
         Deleting one of their items
         """
+        print('ok')
+        print(request.values)
         item = Item.query.get(request.values['id'])
         if not item:
-            return {"error": "Item not found."}, 400
+            return {'error': 'Item not found.'}, 400
         db.session.delete(item)
         db.session.commit()
         return {}, 200
