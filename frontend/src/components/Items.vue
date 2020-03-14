@@ -3,7 +3,10 @@
     <h2 v-if="error">Error: {{ error }}</h2>
     <center>
       <div v-if="!showAddComponent && !selectedItemId">
-        <button class="button-add" v-on:click="showAddComponent = true">
+        <button
+          class="button-add"
+          v-on:click="showAddComponent = true"
+        >
           Add
         </button>
       </div>
@@ -21,7 +24,10 @@
     </center>
     <p v-if="items.length == 0">Nothing here!</p>
 
-    <section v-if="!showAddComponent && !selectedItemId" class="cards">
+    <section
+      v-if="!showAddComponent && !selectedItemId"
+      class="cards"
+    >
       <div
         v-for="item in items"
         v-bind:key="item.id"
@@ -99,6 +105,7 @@ export default {
         .then(response => {
           if (response.status == 200) {
             this.success = "Item removed.";
+            this.selectedItemId = null;
           } else {
             this.success = null;
             console.log("some unexpected response");
