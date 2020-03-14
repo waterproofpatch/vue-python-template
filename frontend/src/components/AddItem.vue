@@ -5,7 +5,11 @@
     <div class="form-container">
       <form class="form form-item">
         <div class="form-field">
-          <input placeholder="Field1" type="text" v-model="newItem.field1" />
+          <input
+            placeholder="Field1"
+            type="text"
+            v-model="newItem.field1"
+          />
         </div>
         <div class="form-field">
           <input
@@ -69,6 +73,7 @@ export default {
           console.log("got response " + response);
           if (response.status == 200) {
             this.success = "Item added.";
+            this.error = null;
           } else {
             this.success = null;
           }
