@@ -81,23 +81,25 @@ export default {
     };
   },
   mounted() {
-    console.log(this.showAddComponent);
     if (this.$store.state.uid == null) {
       this.$router.push("login");
       return;
     }
-    this.axios
-      .get("/api/items")
-      .then(response => {
-        this.items = response.data;
-      })
-      .catch(error => {
-        this.items = [];
-        this.error = error.response.data.error;
-      })
-      .finally(() => {});
+    this.getItems();
   },
   methods: {
+    getItems: function() {
+      this.axios
+        .get("/api/items")
+        .then(response => {
+          this.items = response.data;
+        })
+        .catch(error => {
+          this.items = [];
+          this.error = error.response.data.error;
+        })
+        .finally(() => {});
+    },
     deleteItem: function(id) {
       console.log("called delete on id " + id);
       this.axios
@@ -106,6 +108,7 @@ export default {
           if (response.status == 200) {
             this.success = "Item removed.";
             this.selectedItemId = null;
+            this.getItems();
           } else {
             this.success = null;
             console.log("some unexpected response");
