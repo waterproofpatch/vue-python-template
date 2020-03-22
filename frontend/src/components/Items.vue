@@ -33,17 +33,22 @@
         v-for="item in items"
         v-bind:key="item.id"
         class="card"
-        v-on:click="selectItem(item.id)"
       >
         <div class="card-header">
           <div>
             header
           </div>
           <div>
-            delete
+            <a
+              v-on:click="deleteItem(item.id)"
+              href="#"
+            >delete</a>
           </div>
         </div>
-        <div class="card-main">
+        <div
+          class="card-main"
+          v-on:click="selectItem(item.id)"
+        >
           <div class="main-description">
             {{ item }}
           </div>
