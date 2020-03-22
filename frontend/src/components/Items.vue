@@ -50,7 +50,10 @@
       </div>
     </section>
 
-    <AddItem v-if="showAddComponent" />
+    <AddItem
+      v-on:add-item="addItem"
+      v-if="showAddComponent"
+    />
     <Item
       v-on:delete-item="deleteItem"
       v-if="selectedItemId"
@@ -100,13 +103,16 @@ export default {
         })
         .finally(() => {});
     },
+    addItem2: function(item) {
+      console.log("add item name " + item.name);
+    },
     deleteItem: function(id) {
-      console.log("called delete on id " + id);
       this.axios
         .delete("/api/items?id=" + id)
         .then(response => {
           if (response.status == 200) {
             this.success = "Item removed.";
+            this.error = null;
             this.selectedItemId = null;
             this.getItems();
           } else {
