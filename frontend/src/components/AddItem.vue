@@ -30,7 +30,7 @@
             class="btn"
             type="submit"
             value="Add"
-            v-on:click.prevent="addItem"
+            v-on:click.prevent="$emit('add-item', newItem)"
           />
         </div>
       </form>
