@@ -24,41 +24,39 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/register",
-    component: Register
+    component: Register,
+    name: "Register"
   },
   {
     path: "/login",
-    component: Login
+    component: Login,
+    name: "Login"
   },
   {
     path: "/index",
-    component: Index
+    component: Index,
+    name: "Index"
   },
   {
     path: "/items",
-    component: Items
+    component: Items,
+    name: "Items"
   }
 ];
 
 const router = new VueRouter({
   routes // short for `routes: routes`
 });
-// done vue router
 
-// axios interceptors
-axios.interceptors.request.use(
-  function(config) {
-    // Add our access token, if we have one, to each request
-    if (store.getters.accessToken) {
-      config.headers.Authorization = "Bearer " + store.getters.accessToken;
-    }
-    return config;
-  },
-  function(error) {
-    // Do something with request error
-    return Promise.reject(error);
+// nav guard to prompt user to login
+router.beforeEach((to, from, next) => {
+  if (to.name === "Items" && store.getters.uid === null) {
+    next({ name: "Login" });
+  } else {
+    next();
   }
-);
+});
+// done vue router
 
 // Add a response interceptor
 axios.interceptors.response.use(
@@ -67,7 +65,7 @@ axios.interceptors.response.use(
     return response;
   },
   function(error) {
-    // Do something with response error
+    // Logout if we get unauth
     if (error.response.status === 401) {
       store.commit("logout");
       router.push("login");
