@@ -65,7 +65,7 @@ axios.interceptors.response.use(
     return response;
   },
   function(error) {
-    // Do something with response error
+    // Logout if we get unauth
     if (error.response.status === 401) {
       store.commit("logout");
       router.push("login");

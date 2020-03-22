@@ -54,12 +54,7 @@ export default {
       error: null
     };
   },
-  mounted() {
-    // if (this.$store.state.uid == null) {
-    //   this.$router.push("login");
-    //   return;
-    // }
-  },
+  mounted() {},
   methods: {}
 };
 </script>
