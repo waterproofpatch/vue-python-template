@@ -18,3 +18,5 @@ deploy:
 run_uwsgi:
 	uwsgi --ini wsgi.ini
 
+run_test:
+	python -m backend.app & (cd frontend && npm run serve)
