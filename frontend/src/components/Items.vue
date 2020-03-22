@@ -103,8 +103,31 @@ export default {
         })
         .finally(() => {});
     },
-    addItem2: function(item) {
-      console.log("add item name " + item.name);
+    addItem: function(item) {
+      this.axios
+        .post("/api/items", {
+          field1: item.field1,
+          jsonfield1: item.attributes
+        })
+        .then(response => {
+          console.log("got response " + response);
+          if (response.status == 200) {
+            this.success = "Item added.";
+            this.error = null;
+          } else {
+            this.success = null;
+          }
+        })
+        .catch(error => {
+          if (error.response.status == 400) {
+            this.error = error.response.data.error;
+            this.success = null;
+          } else {
+            this.error = error.response.status;
+            this.success = null;
+          }
+        })
+        .finally(response => {});
     },
     deleteItem: function(id) {
       this.axios
