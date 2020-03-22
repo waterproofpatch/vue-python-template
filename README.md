@@ -13,6 +13,12 @@ Template for setting up a simple RESTful API with authentication and backend mod
 
 Start the app in debug mode for testing
 
+### Start both:
+
+```bash
+make run_devel
+```
+
 ### Start the backend:
 
 ```bash

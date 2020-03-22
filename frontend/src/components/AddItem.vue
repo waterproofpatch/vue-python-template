@@ -1,7 +1,6 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{ error }}</h2>
-    <h2 v-if="success">Success: {{ success }}</h2>
     <div class="form-container">
       <form class="form form-item">
         <div class="form-field">
@@ -30,7 +29,7 @@
             class="btn"
             type="submit"
             value="Add"
-            v-on:click.prevent="addItem"
+            v-on:click.prevent="$emit('add-item', newItem)"
           />
         </div>
       </form>
@@ -52,8 +51,7 @@ export default {
           attributeB: ""
         }
       },
-      error: null,
-      success: null
+      error: null
     };
   },
   mounted() {
@@ -62,34 +60,7 @@ export default {
       return;
     }
   },
-  methods: {
-    addItem() {
-      this.axios
-        .post("/api/items", {
-          field1: this.newItem.field1,
-          jsonfield1: this.newItem.attributes
-        })
-        .then(response => {
-          console.log("got response " + response);
-          if (response.status == 200) {
-            this.success = "Item added.";
-            this.error = null;
-          } else {
-            this.success = null;
-          }
-        })
-        .catch(error => {
-          if (error.response.status == 400) {
-            this.error = error.response.data.error;
-            this.success = null;
-          } else {
-            this.error = error.response.status;
-            this.success = null;
-          }
-        })
-        .finally(response => {});
-    }
-  }
+  methods: {}
 };
 </script>
 
