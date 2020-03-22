@@ -86,10 +86,10 @@ export default {
     };
   },
   mounted() {
-    if (this.$store.state.uid == null) {
-      this.$router.push("login");
-      return;
-    }
+    // if (this.$store.state.uid == null) {
+    //   this.$router.push("login");
+    //   return;
+    // }
     this.getItems();
   },
   methods: {
