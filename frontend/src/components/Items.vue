@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{ error }}</h2>
+    <h2 v-if="success">Success: {{ success }}</h2>
     <center>
       <div v-if="!showAddComponent && !selectedItemId">
         <button
@@ -80,7 +81,8 @@ export default {
       items: [],
       showAddComponent: false,
       selectedItemId: null,
-      error: null
+      error: null,
+      success: null
     };
   },
   mounted() {
@@ -113,6 +115,8 @@ export default {
           console.log("got response " + response);
           if (response.status == 200) {
             this.success = "Item added.";
+            this.getItems();
+            this.showAddComponent = false;
             this.error = null;
           } else {
             this.success = null;
@@ -135,9 +139,9 @@ export default {
         .then(response => {
           if (response.status == 200) {
             this.success = "Item removed.";
+            this.getItems();
             this.error = null;
             this.selectedItemId = null;
-            this.getItems();
           } else {
             this.success = null;
             console.log("some unexpected response");
