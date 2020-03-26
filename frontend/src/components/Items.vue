@@ -3,19 +3,7 @@
     <h2 v-if="error">Error: {{ error }}</h2>
     <h2 v-if="success">Success: {{ success }}</h2>
     <center>
-      <div v-if="!showAddComponent && !selectedItem">
-        <a href="#">
-          <span
-            v-on:click="showAddComponent = true"
-            style="color: var(--button-bg-color);"
-          >
-            <font-awesome-icon
-              size="3x"
-              :icon="['fas', 'plus']"
-            />
-          </span></a>
-      </div>
-      <div v-else>
+      <div v-if="showAddComponent || selectedItem">
         <a href="#">
           <span
             v-on:click="showAddComponent = false;
@@ -60,6 +48,27 @@
         >
           <div class="main-description">
             {{ item }}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <!-- NA -->
+          </div>
+          <div>
+            <a href="#">
+              <span
+                v-on:click="showAddComponent = true"
+                style="color: var(--main-bg-color);"
+              >
+                <font-awesome-icon :icon="['fas', 'plus']" />
+              </span></a>
+          </div>
+        </div>
+        <div class="card-main">
+          <div class="main-description">
+            <!-- Add -->
           </div>
         </div>
       </div>
@@ -189,13 +198,15 @@ export default {
   }
 }
 .cards {
-  justify-content: space-between;
+  /* justify-content: space-between; */
   display: flex;
   flex-wrap: wrap;
+  padding-top: 20px;
 }
 
 .card {
   width: 250px; /* Set width of cards */
+  height: 250px;
   display: flex; /* Children use Flexbox */
   flex-direction: column; /* Rotate Axis */
   border-radius: 4px; /* Slightly Curve edges */
