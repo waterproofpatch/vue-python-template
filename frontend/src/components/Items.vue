@@ -4,12 +4,22 @@
     <h2 v-if="success">Success: {{ success }}</h2>
     <center>
       <div v-if="!showAddComponent && !selectedItemId">
-        <button
+        <a href="#">
+          <span
+            v-on:click="showAddComponent = true"
+            style="color: green"
+          >
+            <font-awesome-icon
+              size="3x"
+              :icon="['fas', 'plus']"
+            />
+          </span></a>
+        <!-- <button
           class="button-add"
           v-on:click="showAddComponent = true"
         >
           Add
-        </button>
+        </button> -->
       </div>
       <div v-else>
         <button
