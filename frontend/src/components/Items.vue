@@ -14,23 +14,19 @@
               :icon="['fas', 'plus']"
             />
           </span></a>
-        <!-- <button
-          class="button-add"
-          v-on:click="showAddComponent = true"
-        >
-          Add
-        </button> -->
       </div>
       <div v-else>
-        <button
-          class="button-add"
-          v-on:click="
-            showAddComponent = false;
-            selectedItemId = false;
-          "
-        >
-          Back
-        </button>
+        <a href="#">
+          <span
+            v-on:click="showAddComponent = false;
+            selectedItemId=false;"
+            style="color: var(--button-bg-color);"
+          >
+            <font-awesome-icon
+              size="3x"
+              :icon="['fas', 'arrow-left']"
+            />
+          </span></a>
       </div>
     </center>
     <p v-if="items.length == 0">Nothing here!</p>
