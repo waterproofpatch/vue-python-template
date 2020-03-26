@@ -3,7 +3,7 @@
     <h2 v-if="error">Error: {{ error }}</h2>
     <h2 v-if="success">Success: {{ success }}</h2>
     <center>
-      <div v-if="!showAddComponent && !selectedItemId">
+      <div v-if="!showAddComponent && !selectedItem">
         <a href="#">
           <span
             v-on:click="showAddComponent = true"
@@ -19,7 +19,7 @@
         <a href="#">
           <span
             v-on:click="showAddComponent = false;
-            selectedItemId=false;"
+            selectedItem=false;"
             style="color: var(--button-bg-color);"
           >
             <font-awesome-icon
@@ -32,7 +32,7 @@
     <p v-if="items.length == 0">Nothing here!</p>
 
     <section
-      v-if="!showAddComponent && !selectedItemId"
+      v-if="!showAddComponent && !selectedItem"
       class="cards"
     >
       <div
@@ -56,7 +56,7 @@
         </div>
         <div
           class="card-main"
-          v-on:click="selectItem(item.id)"
+          v-on:click="selectItem(item)"
         >
           <div class="main-description">
             {{ item }}
@@ -71,8 +71,8 @@
     />
     <Item
       v-on:delete-item="deleteItem"
-      v-if="selectedItemId"
-      v-bind:item-id="selectedItemId"
+      v-if="selectedItem"
+      v-bind:item="selectedItem"
     />
 
     <!-- <p align="center"><button v-on:click="addItem">Add</button></p> -->
@@ -94,7 +94,7 @@ export default {
     return {
       items: [],
       showAddComponent: false,
-      selectedItemId: null,
+      selectedItem: null,
       error: null,
       success: null
     };
@@ -151,7 +151,7 @@ export default {
             this.success = "Item removed.";
             this.getItems();
             this.error = null;
-            this.selectedItemId = null;
+            this.selectedItem = null;
           } else {
             this.success = null;
             console.log("some unexpected response");
@@ -169,8 +169,8 @@ export default {
         })
         .finally(response => {});
     },
-    selectItem: function(id) {
-      this.selectedItemId = id;
+    selectItem: function(item) {
+      this.selectedItem = item;
     }
   }
 };
