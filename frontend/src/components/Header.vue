@@ -64,8 +64,8 @@ export default {
   width: 100%;
 }
 .inner-header {
-  background-color: #409fbf;
-  color: white;
+  background-color: var(--header-bg-color);
+  color: var(--main-bg-color);
   height: 5em;
   padding: 0 0 0 1.4em;
   display: flex;
