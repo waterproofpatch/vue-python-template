@@ -43,7 +43,8 @@
               v-on:click="deleteItem(item.id)"
               href="#"
             >
-              <font-awesome-icon :icon="['fas', 'trash']" />
+              <span style="color: Red;">
+                <font-awesome-icon :icon="['fas', 'trash']" /></span>
             </a>
           </div>
         </div>
