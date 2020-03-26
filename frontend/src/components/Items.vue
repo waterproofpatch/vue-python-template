@@ -7,7 +7,7 @@
         <a href="#">
           <span
             v-on:click="showAddComponent = true"
-            style="color: green"
+            style="color: var(--button-bg-color);"
           >
             <font-awesome-icon
               size="3x"
