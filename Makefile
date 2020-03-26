@@ -11,7 +11,7 @@ push_docker:
 	docker push waterproofpatch/vue-python-template:latest
 
 # Deploy to AWS beanstock. Assumes logged into AWS.
-deploy:
+deploy: docker push_docker
 	eb deploy VuePythonTemplate-env
 
 # Start the wsgi server locally. Useful to verify the uwsgi config is working
