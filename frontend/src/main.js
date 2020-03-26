@@ -5,6 +5,17 @@ import Login from "./components/Login.vue";
 import Index from "./components/Index.vue";
 import Items from "./components/Items.vue";
 
+// fontawesome
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+library.add(faTrash);
+library.add(faPlus);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
+
 import store from "./store";
 
 Vue.config.productionTip = false;
