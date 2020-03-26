@@ -46,14 +46,14 @@
       >
         <div class="card-header">
           <div>
-            header
+            {{item.id}}
           </div>
           <div>
             <a
               v-on:click="deleteItem(item.id)"
               href="#"
             >
-              <span style="color: Red;">
+              <span style="color: white;">
                 <font-awesome-icon :icon="['fas', 'trash']" /></span>
             </a>
           </div>
