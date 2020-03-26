@@ -198,12 +198,15 @@ export default {
   width: 250px; /* Set width of cards */
   display: flex; /* Children use Flexbox */
   flex-direction: column; /* Rotate Axis */
-  border: 1px solid #409fbf; /* Set up Border */
   border-radius: 4px; /* Slightly Curve edges */
   overflow: hidden; /* Fixes the corners */
   margin: 5px; /* Add space between cards */
   background: white;
-  /* box-shadow: 1px 2px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .card-header {
