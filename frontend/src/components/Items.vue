@@ -26,6 +26,7 @@
       <div
         v-for="item in items"
         v-bind:key="item.id"
+        v-on:click="selectItem(item)"
         class="card"
       >
         <div class="card-header">
@@ -42,10 +43,7 @@
             </a>
           </div>
         </div>
-        <div
-          class="card-main"
-          v-on:click="selectItem(item)"
-        >
+        <div class="card-main">
           <div class="main-description">
             {{ item }}
           </div>
