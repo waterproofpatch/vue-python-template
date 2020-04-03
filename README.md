@@ -46,6 +46,14 @@ docker run -p 8080:80 waterproofpatch/vue-python-template
 docker push waterproofpatch/vue-python-template
 ```
 
+### Deploy to AWS
+
+```
+make deploy
+```
+
+Then visit http://vuepythontemplate-env.ynepgp3pkf.us-west-2.elasticbeanstalk.com/#/
+
 ### Test UWSGI:
 
 ```
