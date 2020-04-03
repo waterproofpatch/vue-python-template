@@ -2,6 +2,7 @@
   <div>
     <h2 v-if="error">Error: {{ error }}</h2>
     <h2 v-if="success">Success: {{ success }}</h2>
+    <!-- show the 'add' button -->
     <center>
       <div v-if="showAddComponent || selectedItem">
         <a href="#">
@@ -17,8 +18,11 @@
           </span></a>
       </div>
     </center>
+
+    <!-- print a message if no items are availabel -->
     <p v-if="items.length == 0">Nothing here!</p>
 
+    <!-- show each item -->
     <section
       v-if="!showAddComponent && !selectedItem"
       class="cards"
@@ -26,7 +30,7 @@
       <div
         v-for="item in items"
         v-bind:key="item.id"
-        v-on:click="selectItem(item)"
+        v-on:click="selectedItem = item"
         class="card"
       >
         <div class="card-header">
@@ -107,6 +111,10 @@ export default {
     };
   },
   mounted() {
+    console.log("have item: " + this.$route.params.id);
+    if (this.$route.params.id != null) {
+      console.log("specifying item: " + this.$route.params.id);
+    }
     this.getItems();
   },
   methods: {
@@ -175,9 +183,6 @@ export default {
           }
         })
         .finally(response => {});
-    },
-    selectItem: function(item) {
-      this.selectedItem = item;
     }
   }
 };

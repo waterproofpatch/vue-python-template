@@ -7,7 +7,7 @@
       <div>
         <ul>
           <li>
-            <router-link to="/index">Home</router-link>
+            <router-link to="/">Home</router-link>
           </li>
           <li v-if="$store.state.uid!=null">
             <router-link to="/items">Items</router-link>
@@ -20,7 +20,7 @@
           </li>
           <li v-if="$store.state.uid!=null">
             <router-link
-              to="/index"
+              to="/"
               @click.native="doLogout"
             >Logout</router-link>
           </li>

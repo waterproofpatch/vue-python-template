@@ -20,7 +20,9 @@ export default {
       error: null
     };
   },
-  mounted() {},
+  mounted() {
+    console.log("i am on item " + this.$route.params.id);
+  },
   methods: {}
 };
 </script>
