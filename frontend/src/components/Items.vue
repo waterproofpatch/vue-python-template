@@ -85,7 +85,6 @@
       v-bind:item="selectedItem"
     />
 
-    <!-- <p align="center"><button v-on:click="addItem">Add</button></p> -->
   </div>
 </template>
 
