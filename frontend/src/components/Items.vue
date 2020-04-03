@@ -81,7 +81,6 @@
       v-if="showAddComponent"
     />
     <Item
-      v-on:delete-item="deleteItem"
       v-if="selectedItem"
       v-bind:item="selectedItem"
     />
