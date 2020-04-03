@@ -1,3 +1,5 @@
+.PHONY: test
+
 # Build docker image. Docker hub account username is 'waterproofpatch'
 docker:
 	docker build . -t waterproofpatch/vue-python-template
@@ -21,3 +23,6 @@ run_uwsgi:
 # Start the backend and then the frontend
 run_devel:
 	python -m backend.app & (cd frontend && npm run serve)
+
+test:
+	pytest

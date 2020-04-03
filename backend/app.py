@@ -111,6 +111,10 @@ def init_db(test_data=False, drop_all=False):
     db.session.commit()
 
 
+def create_app():
+    app.run(debug=True)
+
+
 if __name__ == "__main__":
     """
     Entry point
@@ -128,4 +132,4 @@ if __name__ == "__main__":
         init_db(test_data=args.testdata, drop_all=args.dropall)
         sys.exit(0)
     init_db(test_data=args.testdata, drop_all=args.dropall)
-    app.run(debug=True)
+    create_app()
