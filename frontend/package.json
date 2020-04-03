@@ -29,10 +29,6 @@
   },
   "eslintConfig": {
     "root": true,
-    "ecmaFeatures": {
-      "arrowFunctions": true,
-      "destructuring": true
-    },
     "env": {
       "node": true
     },
