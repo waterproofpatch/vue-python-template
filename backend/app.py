@@ -16,7 +16,16 @@ from flask_restful import Resource, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 # my imports, some from __init__
-from backend import app, db, api, auth
+from backend import flask_app, db, api, views
+
+
+print('registering endpoints')
+api.add_resource(views.Profile, '/api/profile')
+api.add_resource(views.Register, '/api/register')
+api.add_resource(views.Login, '/api/login')
+api.add_resource(views.Logout, '/api/logout')
+api.add_resource(views.TokenRefresh, '/api/refresh')
+api.add_resource(views.Items, '/api/items')
 
 
 def init_db(test_data=False, drop_all=False):
@@ -24,7 +33,7 @@ def init_db(test_data=False, drop_all=False):
     Initialize the database
     """
     print("Initializing DB")
-    db.init_app(app)
+    db.init_app(flask_app)
     if drop_all:
         print("Dropping tables...")
         db.drop_all()
@@ -38,18 +47,6 @@ def init_db(test_data=False, drop_all=False):
         db.session.add(test_user)
         db.session.commit()
     db.session.commit()
-
-
-def register_routes(api):
-    """
-    Register the endpoints to the API
-    """
-    api.add_resource(auth.Profile, '/api/profile')
-    api.add_resource(auth.Register, '/api/register')
-    api.add_resource(auth.Login, '/api/login')
-    api.add_resource(auth.Logout, '/api/logout')
-    api.add_resource(auth.TokenRefresh, '/api/refresh')
-    api.add_resource(auth.Items, '/api/items')
 
 
 if __name__ == "__main__":
@@ -70,5 +67,4 @@ if __name__ == "__main__":
         sys.exit(0)
     init_db(test_data=args.testdata, drop_all=args.dropall)
 
-    register_routes(api)
-    app.run(debug=True)
+    flask_app.run(debug=True)

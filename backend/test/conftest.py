@@ -10,7 +10,6 @@ from backend import app
 def client():
     # get a Flask app
     the_app = create_app()
-    api = create_api(the_app)
 
     # db_fd, the_app.config['DATABASE'] = tempfile.mkstemp()
     the_app.config['TESTING'] = True

@@ -8,8 +8,6 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 
-# from backend import auth
-
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -56,15 +54,7 @@ def create_app():
 
 
 # initialize the app etc
-app = create_app()
-db = create_db(app)
-api = create_api(app)
-jwt = create_jwt(app)
-
-# add the endpoints
-# api.add_resource(auth.Profile, '/api/profile')
-# api.add_resource(auth.Register, '/api/register')
-# api.add_resource(auth.Login, '/api/login')
-# api.add_resource(auth.Logout, '/api/logout')
-# api.add_resource(auth.TokenRefresh, '/api/refresh')
-# api.add_resource(auth.Items, '/api/items')
+flask_app = create_app()
+db = create_db(flask_app)
+api = create_api(flask_app)
+jwt = create_jwt(flask_app)

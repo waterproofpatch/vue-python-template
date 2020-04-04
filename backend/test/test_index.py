@@ -2,7 +2,6 @@ import pytest
 
 
 def test_index(client):
-    print('ok testing app')
-    res = client.get('/index')
+    res = client.get('/api/items')
     print(res)
     assert True
