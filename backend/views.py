@@ -1,5 +1,5 @@
 """
-Authentication backend. Handles logins, registrations, logouts and tokens.
+Views backend. Handles items, logins, registrations, logouts and tokens.
 """
 # native imports
 import base64
@@ -262,11 +262,3 @@ def TokenExpiredCallback(expired_token):
         'sub_status': 42,
         'msg': 'The {} token has expired'.format(token_type)
     }), 401
-
-
-# api.add_resource(Profile, '/api/profile')
-# api.add_resource(Register, '/api/register')
-# api.add_resource(Login, '/api/login')
-# api.add_resource(Logout, '/api/logout')
-# api.add_resource(TokenRefresh, '/api/refresh')
-# api.add_resource(Items, '/api/items')
