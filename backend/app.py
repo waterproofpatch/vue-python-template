@@ -6,6 +6,7 @@ UWSGI: module: app(.py), callable: app
 """
 
 # native imports
+from backend.models import Item, User
 import sys
 import base64
 import argparse
@@ -15,79 +16,7 @@ from flask_restful import Resource, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 # my imports, some from __init__
-from backend import api, app, db, auth
-from backend.models import Item, User
-
-
-class Items(Resource):
-    """
-    Items endpoint
-    """
-    @jwt_required
-    def delete(self):
-        """
-        Deleting one of their items
-        """
-        print('ok')
-        print(request.values)
-        item = Item.query.get(request.values['id'])
-        if not item:
-            return {'error': 'Item not found.'}, 400
-        db.session.delete(item)
-        db.session.commit()
-        return {}, 200
-
-    def get(self):
-        """
-        Get all items
-        """
-        if request.args.get('id') is not None:
-            return [x.as_json() for x in Item.query.filter(Item.name.contains(request.args.get('id')))]
-        return [x.as_json() for x in Item.query.all()], 200
-
-    @jwt_required
-    def put(self):
-        """
-        Update an existing item
-        """
-        if 'field1' not in request.json:
-            return {'error': 'missing field1'}, 400
-        if 'jsonfield1' not in request.json:
-            return {'error': 'missing jsonfield1'}, 400
-        if not request.json['field1']:
-            return {'error': 'field1 must not be 0 length'}, 400
-        if not request.json['jsonfield1']:
-            return {'error': 'jsonfield1 must not be 0 length'}, 400
-        item = Item.query.get(request.json['id'])
-        item.field1 = request.json['field1']
-        item.jsonfield1 = request.json['jsonfield1']
-        db.session.commit()
-        return [x.as_json() for x in Item.query.all()], 200
-
-    @jwt_required
-    def post(self):
-        """
-        Create a new item
-        """
-        if 'field1' not in request.json:
-            return {'error': 'missing field1'}, 400
-        if 'jsonfield1' not in request.json:
-            return {'error': 'missing jsonfield1'}, 400
-        if not request.json['field1']:
-            return {'error': 'field1 must not be 0 length'}, 400
-        if not request.json['jsonfield1']:
-            return {'error': 'jsonfield1 must not be 0 length'}, 400
-        user = User.query.filter_by(email=get_jwt_identity()).first()
-        item = Item(field1=request.json['field1'],
-                    jsonfield1=request.json['jsonfield1'],
-                    user=user)
-        db.session.add(item)
-        db.session.commit()
-        return [x.as_json() for x in Item.query.all()], 200
-
-
-# endpoints here
-api.add_resource(Items, '/api/items')
+from backend import app, db, api, auth
 
 
 def init_db(test_data=False, drop_all=False):
@@ -111,8 +40,16 @@ def init_db(test_data=False, drop_all=False):
     db.session.commit()
 
 
-def create_app():
-    app.run(debug=True)
+def register_routes(api):
+    """
+    Register the endpoints to the API
+    """
+    api.add_resource(auth.Profile, '/api/profile')
+    api.add_resource(auth.Register, '/api/register')
+    api.add_resource(auth.Login, '/api/login')
+    api.add_resource(auth.Logout, '/api/logout')
+    api.add_resource(auth.TokenRefresh, '/api/refresh')
+    api.add_resource(auth.Items, '/api/items')
 
 
 if __name__ == "__main__":
@@ -132,4 +69,6 @@ if __name__ == "__main__":
         init_db(test_data=args.testdata, drop_all=args.dropall)
         sys.exit(0)
     init_db(test_data=args.testdata, drop_all=args.dropall)
-    create_app()
+
+    register_routes(api)
+    app.run(debug=True)

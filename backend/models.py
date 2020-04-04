@@ -6,10 +6,8 @@ import json
 from datetime import datetime
 
 # third party imports
-#from bcrypt import gensalt, hashpw
 import bcrypt
 
-# my imports
 from backend import db
 
 
@@ -68,7 +66,8 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     field1 = db.Column(db.String(100), unique=False, nullable=False)
     jsonfield1 = db.Column(JsonEncodedDict, unique=False, nullable=False)
-    created_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_on = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def as_json(self):
