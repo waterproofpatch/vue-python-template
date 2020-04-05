@@ -3,7 +3,8 @@ import tempfile
 
 
 from backend import create_app, create_api, create_db, create_jwt
-from backend import app
+# from backend import app
+from backend import views
 
 
 @pytest.fixture
