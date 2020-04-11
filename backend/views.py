@@ -122,7 +122,8 @@ class Register(Resource):
         access_token = create_access_token(identity=new_user.email)
         refresh_token = create_refresh_token(identity=new_user.email)
 
-        # set the cookies, at them to the response and return it
+        # response payload has cookies for the token as well as
+        # json payload for metadata so frontend can make use of it
         resp = jsonify({'uid': new_user.id, 'email': new_user.email})
         set_access_cookies(resp, access_token)
         set_refresh_cookies(resp, refresh_token)
@@ -150,7 +151,8 @@ class Login(Resource):
                          base64.b64decode(user.password)) != base64.b64decode(user.password):
             return {"error": "Email or password incorrect"}, 401
 
-        # create tokens
+        # response payload has cookies for the token as well as
+        # json payload for metadata so frontend can make use of it
         resp = jsonify({'uid': user.id, 'email': user.email})
         access_token = create_access_token(identity=user.email)
         refresh_token = create_refresh_token(identity=user.email)

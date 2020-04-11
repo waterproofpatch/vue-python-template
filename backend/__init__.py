@@ -34,12 +34,12 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
         'DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'app.db'))
     if app.config['SQLALCHEMY_DATABASE_URI'].startswith('postgres'):
-        print("Using POSTGRES")
+        print('Using posgress')
     else:
-        print("Using app.db...")
+        print('Using sqlite')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JWT_SECRET_KEY'] = os.environ.get(
-        'RECIPEME_JWT_SECRET_KEY', 'changemepls')
+        'TEMPLATE_JWT_SECRET_KEY', 'changemepls')
     app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
     app.config['JWT_TOKEN_LOCATION'] = ['cookies']

@@ -2,6 +2,8 @@ import json
 
 import pytest
 
+from flask_jwt_extended import decode_token
+
 
 def test_post_login_wrong_email(client):
     """
@@ -63,4 +65,10 @@ def test_post_login_success(client):
         if key == 'Set-Cookie':
             assert value.startswith('access_token_cookie') or value.startswith(
                 'refresh_token_cookie')
+            if value.startswith('access_token_cookie'):
+                token = value.split('=')[1].split(';')[0]
+                decoded_token = decode_token(token)
+                assert decoded_token['identity'] == 'test@gmail.com'
+                assert decoded_token['type'] == 'access'
+                assert decoded_token['fresh'] == False
             assert 'HttpOnly' in [x.strip() for x in value.split(';')]
