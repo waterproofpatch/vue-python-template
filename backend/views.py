@@ -31,8 +31,6 @@ class Items(Resource):
         """
         Deleting one of their items
         """
-        print('ok')
-        print(request.values)
         item = Item.query.get(request.values['id'])
         if not item:
             return {'error': 'Item not found.'}, 400
@@ -147,10 +145,10 @@ class Login(Resource):
 
         user = User.query.filter_by(email=request.json['email']).first()
         if user is None:
-            return {"error": "Email or password incorrect"}, 400
+            return {"error": "Email or password incorrect"}, 401
         if bcrypt.hashpw(request.json['password'].encode(),
                          base64.b64decode(user.password)) != base64.b64decode(user.password):
-            return {"error": "Email or password incorrect"}, 400
+            return {"error": "Email or password incorrect"}, 401
 
         # create tokens
         resp = jsonify({'uid': user.id, 'email': user.email})
@@ -256,6 +254,7 @@ def TokenExpiredCallback(expired_token):
     """
     Tell the user their token expired
     """
+    print('expired token!')
     token_type = expired_token['type']
     return jsonify({
         'status': 401,
