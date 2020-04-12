@@ -39,6 +39,14 @@ def test_post_items_fail_content_type(authenticated_client):
     assert 'invalid content type' in res.json['error']
 
 
+def test_delete_items_fail_unauthenticated(unauthenticated_client):
+    """
+    Test that items endpoint fails when content type is wrong
+    """
+    res = unauthenticated_client.delete('/api/items?id=1')
+    assert 401 == res.status_code
+
+
 def test_post_items_fail_unauthenticated(unauthenticated_client):
     """
     Test that items endpoint fails when content type is wrong
@@ -47,7 +55,7 @@ def test_post_items_fail_unauthenticated(unauthenticated_client):
     assert 401 == res.status_code
 
 
-def test_post_items_success(authenticated_client):
+def test_post_and_get_items_success(authenticated_client):
     """
     Test that we can add an item
     """
@@ -72,3 +80,32 @@ def test_post_items_success(authenticated_client):
     assert len(res.json) == 2
     assert 'field1' in res.json[1]
     assert res.json[1]['field1'] == 'field1_value2'
+
+
+def test_delete_items_success(authenticated_client):
+    """
+    Test that we can add an item
+    """
+    new_item = {'field1': 'field1_value', 'jsonfield1': {
+        'key1': 'key1_value', 'list1': ['list1_value1', 'list1_value2']}}
+    res = authenticated_client.post('api/items', json=new_item)
+    assert res.status_code == 200
+
+    res = authenticated_client.get('api/items')
+    assert res.status_code == 200
+    assert len(res.json) == 1
+    assert 'field1' in res.json[0]
+    assert res.json[0]['field1'] == 'field1_value'
+
+    # try deleting wrong item, should fail
+    res = authenticated_client.delete("api/items?id=2")
+    assert res.status_code == 400
+    assert 'error' in res.json
+    assert 'Item not found' in res.json['error']
+
+    res = authenticated_client.delete("api/items?id=1")
+    assert res.status_code == 200
+
+    res = authenticated_client.get('api/items')
+    assert res.status_code == 200
+    assert not res.json
