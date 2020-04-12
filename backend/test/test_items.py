@@ -18,24 +18,10 @@ def test_get_items(client):
     assert True
 
 
-def test_post_items(client):
+def test_post_items(authenticated_client):
     """
     Test that we must authenticate to add an item
     """
-    res = client.post('/api/items')
-    # we haven't logged in
-    assert 401 == res.status_code
-
-    # get some valid access tokens
-    access_token = create_access_token(identity='test@gmail.com')
-    refresh_token = create_refresh_token(identity='test@gmail.com')
-    client.set_cookie('/', 'access_token_cookie', access_token)
-    client.set_cookie('/', 'refresh_token_cookie', refresh_token)
-    # res = client.post(
-    #     '/api/login',
-    #     json={'email': 'test@gmail.com', 'password': 'passwordpassword'})
-    # assert 200 == res.status_code
-
-    res = client.post('/api/items')
+    res = authenticated_client.post('/api/items')
     # we haven't logged in
     assert 200 == res.status_code
