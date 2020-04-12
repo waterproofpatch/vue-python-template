@@ -25,7 +25,7 @@ run_devel:
 	python -m backend.app & (cd frontend && npm run serve)
 
 test:
-	coverage run -m pytest backend/test -s
+	coverage run -m pytest backend/test -s && coverage html
 
 clean:
-	rm -rf htmlcov
+	rm -rf htmlcov .coverage 
