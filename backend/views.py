@@ -70,6 +70,8 @@ class Items(Resource):
         """
         Create a new item
         """
+        if request.content_type != 'application/json':
+            return {'error': 'invalid content type'}, 400
         if 'field1' not in request.json:
             return {'error': 'missing field1'}, 400
         if 'jsonfield1' not in request.json:
