@@ -70,8 +70,7 @@ class Items(Resource):
         """
         Create a new item
         """
-        print(request.content_type)
-        if 'application/json' not in request.content_type.split(';'):
+        if request.content_type is None or 'application/json' not in request.content_type.split(';'):
             return {'error': 'invalid content type'}, 400
         if 'field1' not in request.json:
             return {'error': 'missing field1'}, 400
