@@ -25,3 +25,5 @@ node_modules
 backend/.pytest_cache/v/cache/lastfailed
 backend/models.py
 backend/.pytest_cache/v/cache/nodeids
+.coverage
+htmlcov
