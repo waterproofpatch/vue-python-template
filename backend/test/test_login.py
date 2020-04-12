@@ -8,55 +8,55 @@ from flask_jwt_extended import decode_token
 import jwt
 
 
-def test_post_login_wrong_email(client):
+def test_post_login_wrong_email(unauthenticated_client):
     """
     Test that we handle wrong email properly
     """
-    res = client.post(
+    res = unauthenticated_client.post(
         '/api/login',
         json={'email': 'test@gmail.comwrong', 'password': 'passwordpassword'})
     assert 401 == res.status_code
     assert 'Set-Cookie' not in res.headers
 
 
-def test_post_login_wrong_password(client):
+def test_post_login_wrong_password(unauthenticated_client):
     """
     Test that we handle wrong password properly
     """
-    res = client.post(
+    res = unauthenticated_client.post(
         '/api/login',
         json={'email': 'test@gmail.com', 'password': 'passwordpasswordwrong'})
     assert 401 == res.status_code
     assert 'Set-Cookie' not in res.headers
 
 
-def test_post_login_missing_email(client):
+def test_post_login_missing_email(unauthenticated_client):
     """
     Test that we handle missing email properly
     """
-    res = client.post(
+    res = unauthenticated_client.post(
         '/api/login',
         json={'password': 'passwordpassword'})
     assert 400 == res.status_code
     assert 'Set-Cookie' not in res.headers
 
 
-def test_post_login_missing_password(client):
+def test_post_login_missing_password(unauthenticated_client):
     """
     Test that we handle missing password properly
     """
-    res = client.post(
+    res = unauthenticated_client.post(
         '/api/login',
         json={'email': 'test@gmail.com'})
     assert 400 == res.status_code
     assert 'Set-Cookie' not in res.headers
 
 
-def test_post_login_success(client):
+def test_post_login_success(unauthenticated_client):
     """
     Test that we can login
     """
-    res = client.post(
+    res = unauthenticated_client.post(
         '/api/login',
         json={'email': 'test@gmail.com', 'password': 'passwordpassword'})
     assert 200 == res.status_code
@@ -77,14 +77,15 @@ def test_post_login_success(client):
             assert 'HttpOnly' in [x.strip() for x in value.split(';')]
 
 
-def test_post_login_success_shortlived_token(client):
+def test_post_login_success_shortlived_token(unauthenticated_client):
     """
     Test that we can login, but that within 1 second we have an expired token
     """
-    client.application.config['JWT_ACCESS_TOKEN_EXPIRES'] = 1  # one second!
-    client.application.config['JWT_REFRESH_TOKEN_EXPIRES'] = 1  # one second!
+    unauthenticated_client.application.config['JWT_ACCESS_TOKEN_EXPIRES'] = 1  # one second!
+    # one second!
+    unauthenticated_client.application.config['JWT_REFRESH_TOKEN_EXPIRES'] = 1
 
-    res = client.post(
+    res = unauthenticated_client.post(
         '/api/login',
         json={'email': 'test@gmail.com', 'password': 'passwordpassword'})
     assert 200 == res.status_code

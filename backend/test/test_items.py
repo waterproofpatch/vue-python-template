@@ -5,11 +5,11 @@ import pytest
 from flask_jwt_extended import create_access_token, create_refresh_token
 
 
-def test_get_items(client):
+def test_get_items(unauthenticated_client):
     """
     Test the items endpoint, retreival
     """
-    res = client.get('/api/items')
+    res = unauthenticated_client.get('/api/items')
     assert 200 == res.status_code
     assert 'application/json' == res.content_type
 
@@ -39,11 +39,11 @@ def test_post_items_fail_content_type(authenticated_client):
     assert 'invalid content type' in res.json['error']
 
 
-def test_post_items_fail_unauthenticated(client):
+def test_post_items_fail_unauthenticated(unauthenticated_client):
     """
     Test that items endpoint fails when content type is wrong
     """
-    res = client.post('/api/items')
+    res = unauthenticated_client.post('/api/items')
     assert 401 == res.status_code
 
 

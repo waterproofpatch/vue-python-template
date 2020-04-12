@@ -8,7 +8,7 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 
 
 @pytest.fixture
-def client():
+def unauthenticated_client():
     """
     A client with no access tokens.
     """
@@ -24,15 +24,17 @@ def client():
 
 
 @pytest.fixture()
-def authenticated_client(client):
+def authenticated_client(unauthenticated_client):
     """
     A client with valid access and refresh tokens, capable of authenticating 
     against endpoints garded with @jwt_reqired
     """
 
-    with client.application.app_context():
+    with unauthenticated_client.application.app_context():
         access_token = create_access_token(identity='test@gmail.com')
         refresh_token = create_refresh_token(identity='test@gmail.com')
-        client.set_cookie('/', 'access_token_cookie', access_token)
-        client.set_cookie('/', 'refresh_token_cookie', refresh_token)
-    yield client
+        unauthenticated_client.set_cookie(
+            '/', 'access_token_cookie', access_token)
+        unauthenticated_client.set_cookie(
+            '/', 'refresh_token_cookie', refresh_token)
+    yield unauthenticated_client
