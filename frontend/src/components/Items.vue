@@ -22,8 +22,7 @@
         v-for="item in items"
         v-bind:key="item.id"
         v-on:click="$router.push({ path: `/items/${item.id}` })"
-        class="
-        card"
+        class="card"
       >
         <div class="card-header">
           <div>
@@ -31,7 +30,7 @@
           </div>
           <div>
             <a
-              v-on:click="deleteItem(item.id)"
+              v-on:click.stop="deleteItem(item.id)"
               href="#"
             >
               <span style="color: white;">
@@ -96,10 +95,6 @@ export default {
     };
   },
   mounted() {
-    console.log("have item: " + this.$route.params.id);
-    if (this.$route.params.id != null) {
-      console.log("specifying item: " + this.$route.params.id);
-    }
     this.getItems();
   },
   methods: {
