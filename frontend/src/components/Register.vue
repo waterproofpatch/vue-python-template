@@ -5,17 +5,34 @@
       <p>Register</p>
       <form class="form form-auth">
         <div class="form-field">
-          <input placeholder="Email" type="text" v-model="email">
-       </div>
+          <input
+            placeholder="Email"
+            type="text"
+            v-model="email"
+          >
+        </div>
         <div class="form-field">
-          <input placeholder="Password" type="password" v-model="password">
-       </div>
+          <input
+            placeholder="Password"
+            type="password"
+            v-model="password"
+          >
+        </div>
         <div class="form-field">
-        <input placeholder="Confirm Password" type="password" v-model="passwordConfirmation">
-       </div>
+          <input
+            placeholder="Confirm Password"
+            type="password"
+            v-model="passwordConfirmation"
+          >
+        </div>
         <div class="form-field">
-          <input class="btn" type="submit" value="Register" v-on:click.prevent="doRegister">
-       </div>
+          <input
+            class="btn"
+            type="submit"
+            value="Register"
+            v-on:click.prevent="doRegister"
+          >
+        </div>
       </form>
     </div>
   </div>
@@ -44,16 +61,16 @@ export default {
           passwordConfirmation: this.passwordConfirmation
         })
         .then(response => {
-          this.$store.commit("login", 
-            {uid: response.data.uid, email: response.data.email}
-          );
+          this.$store.commit("login", {
+            uid: response.data.uid,
+            email: response.data.email
+          });
           this.$router.push("index");
         })
         .catch(error => {
           if (error.response.status == 400) {
             this.error = error.response.data.error;
-          }
-          else {
+          } else {
             this.error = error.response.status;
           }
         })

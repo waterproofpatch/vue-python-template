@@ -127,4 +127,10 @@ input {
   margin: 4px 2px;
   cursor: pointer;
 }
+@media screen and (max-width: 600px) {
+  form.form {
+    /* background-color: black; */
+    width: 400px;
+  }
+}
 </style>
