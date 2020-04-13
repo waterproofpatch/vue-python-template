@@ -43,7 +43,7 @@ class Items(Resource):
         Get all items
         """
         if request.args.get('id') is not None:
-            return [x.as_json() for x in Item.query.filter(Item.name.contains(request.args.get('id')))]
+            return [x.as_json() for x in Item.query.filter(Item.id == request.args.get('id'))]
         return [x.as_json() for x in Item.query.all()], 200
 
     @jwt_required
