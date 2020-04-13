@@ -3,7 +3,7 @@
     <h2 v-if="error">Error: {{ error }}</h2>
     <div v-if="item">
       <p><a
-          href="#"
+          href="javascript:void(0)"
           v-on:click="$router.push({name: 'Items'})"
         >Back</a></p>
       <p v-if="item">Item ID: {{ item.id }}</p>

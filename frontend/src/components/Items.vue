@@ -5,7 +5,7 @@
 
     <p v-if="showAddComponent">
       <a
-        href="#"
+        href="javascript:void(0)"
         v-on:click="showAddComponent=false"
       >Back</a>
     </p>
@@ -50,7 +50,7 @@
             <!-- NA -->
           </div>
           <div>
-            <a href="#">
+            <a href="javascript:void(0)">
               <span
                 v-on:click="showAddComponent = true"
                 style="color: var(--main-bg-color);"
