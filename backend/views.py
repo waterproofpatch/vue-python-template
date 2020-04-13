@@ -12,11 +12,10 @@ from flask_jwt_extended import create_access_token, create_refresh_token, jwt_re
     jwt_refresh_token_required, get_jwt_identity, get_raw_jwt, set_access_cookies, \
     set_refresh_cookies, unset_jwt_cookies
 
-# my imports, some from __init__
-from backend.models import User, RevokedTokenModel
+from backend.models import User, Item, RevokedTokenModel
 
+# my imports, from __init__
 from backend import jwt, db
-from backend.models import Item
 
 # globals
 PASSWORD_MIN_LEN = 13
