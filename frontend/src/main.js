@@ -4,6 +4,7 @@ import Register from "./components/Register.vue";
 import Login from "./components/Login.vue";
 import Index from "./components/Index.vue";
 import Items from "./components/Items.vue";
+import Item from "./components/Item.vue";
 
 // fontawesome
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -58,7 +59,7 @@ const routes = [
   },
   {
     path: "/items/:id",
-    component: Items,
+    component: Item,
     name: "Item"
   }
 ];

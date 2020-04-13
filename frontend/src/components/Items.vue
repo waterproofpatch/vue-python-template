@@ -4,11 +4,10 @@
     <h2 v-if="success">Success: {{ success }}</h2>
     <!-- show the 'add' button -->
     <center>
-      <div v-if="showAddComponent || selectedItem">
+      <div v-if="showAddComponent">
         <a href="#">
           <span
-            v-on:click="showAddComponent = false;
-            selectedItem=false;"
+            v-on:click="showAddComponent = false;"
             style="color: var(--button-bg-color);"
           >
             <font-awesome-icon
@@ -24,14 +23,15 @@
 
     <!-- show each item -->
     <section
-      v-if="!showAddComponent && !selectedItem"
+      v-if="!showAddComponent"
       class="cards"
     >
       <div
         v-for="item in items"
         v-bind:key="item.id"
-        v-on:click="selectedItem = item"
-        class="card"
+        v-on:click="$router.push({ path: `/items/${item.id}` })"
+        class="
+        card"
       >
         <div class="card-header">
           <div>
@@ -80,10 +80,6 @@
       v-on:add-item="addItem"
       v-if="showAddComponent"
     />
-    <Item
-      v-if="selectedItem"
-      v-bind:item="selectedItem"
-    />
 
   </div>
 </template>
@@ -103,7 +99,6 @@ export default {
     return {
       items: [],
       showAddComponent: false,
-      selectedItem: null,
       error: null,
       success: null
     };
@@ -164,7 +159,6 @@ export default {
             this.success = "Item removed.";
             this.getItems();
             this.error = null;
-            this.selectedItem = null;
           } else {
             this.success = null;
             console.log("some unexpected response");
