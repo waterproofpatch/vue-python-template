@@ -18,7 +18,7 @@
     </center>
 
     <!-- print a message if no items are availabel -->
-    <p v-if="items.length == 0 && !loading">Nothing here!</p>
+    <p v-if="items.length == 0 && !loading && !showAddComponent">Nothing here!</p>
 
     <!-- show each item -->
     <section
@@ -103,12 +103,11 @@ export default {
     };
   },
   mounted() {
-    this.loading = true;
     this.getItems();
-    this.loading = false;
   },
   methods: {
     getItems: function() {
+      this.loading = true;
       this.axios
         .get("/api/items")
         .then(response => {
@@ -118,7 +117,9 @@ export default {
           this.items = [];
           this.error = error.response.data.error;
         })
-        .finally(() => {});
+        .finally(() => {
+          this.loading = false;
+        });
     },
     addItem: function(item) {
       this.axios

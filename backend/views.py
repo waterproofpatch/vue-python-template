@@ -31,7 +31,12 @@ class Items(Resource):
         """
         Deleting one of their items
         """
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(email=current_user).first()
         item = Item.query.get(request.values['id'])
+        if user.id != item.user_id:
+            return {'error': 'this item does not belong to you'}, 401
+
         if not item:
             return {'error': 'Item not found.'}, 400
         db.session.delete(item)
