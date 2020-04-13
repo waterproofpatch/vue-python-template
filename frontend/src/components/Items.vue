@@ -10,8 +10,15 @@
       >Back</a>
     </p>
 
+    <center>
+      <div
+        v-if="loading"
+        class="loader"
+      ></div>
+    </center>
+
     <!-- print a message if no items are availabel -->
-    <p v-if="items.length == 0">Nothing here!</p>
+    <p v-if="items.length == 0 && !loading">Nothing here!</p>
 
     <!-- show each item -->
     <section
@@ -89,13 +96,16 @@ export default {
   data() {
     return {
       items: [],
+      loading: false,
       showAddComponent: false,
       error: null,
       success: null
     };
   },
   mounted() {
+    this.loading = true;
     this.getItems();
+    this.loading = false;
   },
   methods: {
     getItems: function() {

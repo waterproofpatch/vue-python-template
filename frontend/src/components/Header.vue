@@ -2,7 +2,7 @@
   <div class="header">
     <div class="inner-header">
       <div>
-        MySite
+        Vue-Python-Template
       </div>
       <div>
         <ul>

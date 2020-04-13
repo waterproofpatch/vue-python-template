@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <p>Welcome home.</p>
+    <p>This site is a template made using VueJS or the frontend and Python + Flask for the backend.</p>
   </div>
 </template>
 
