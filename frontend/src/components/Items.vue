@@ -2,21 +2,13 @@
   <div>
     <h2 v-if="error">Error: {{ error }}</h2>
     <h2 v-if="success">Success: {{ success }}</h2>
-    <!-- show the 'add' button -->
-    <center>
-      <div v-if="showAddComponent">
-        <a href="#">
-          <span
-            v-on:click="showAddComponent = false;"
-            style="color: var(--button-bg-color);"
-          >
-            <font-awesome-icon
-              size="3x"
-              :icon="['fas', 'arrow-left']"
-            />
-          </span></a>
-      </div>
-    </center>
+
+    <p v-if="showAddComponent">
+      <a
+        href="#"
+        v-on:click="showAddComponent=false"
+      >Back</a>
+    </p>
 
     <!-- print a message if no items are availabel -->
     <p v-if="items.length == 0">Nothing here!</p>
