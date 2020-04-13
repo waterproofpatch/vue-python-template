@@ -5,18 +5,24 @@ import pytest
 from flask_jwt_extended import create_access_token, create_refresh_token
 
 
-def test_get_items(unauthenticated_client):
+def test_get_items(authenticated_client):
     """
     Test the items endpoint, retreival
     """
-    res = unauthenticated_client.get('/api/items')
+    res = authenticated_client.get('/api/items')
     assert 200 == res.status_code
     assert 'application/json' == res.content_type
 
     # not expecting any items
     assert not res.get_json()
 
-    assert True
+
+def test_get_items_fail_unauthenticated(unauthenticated_client):
+    """
+    Test the items endpoint, retreival
+    """
+    res = unauthenticated_client.get('/api/items')
+    assert 401 == res.status_code
 
 
 def test_post_items_fail_empty_payload(authenticated_client):

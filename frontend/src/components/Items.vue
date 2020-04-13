@@ -85,12 +85,10 @@
 <script>
 /* eslint-disable */
 import AddItem from "./AddItem.vue";
-import Item from "./Item.vue";
 export default {
   name: "Items",
   components: {
-    AddItem,
-    Item
+    AddItem
   },
   props: {},
   data() {

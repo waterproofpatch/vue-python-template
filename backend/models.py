@@ -70,17 +70,23 @@ class Item(db.Model):
                            default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    def as_json(self):
+    def as_json(self, user_id=None):
         """
         JSON representation of this model
         """
-        return {
+        payload = {
             "id": self.id,
-            "user_id": self.user.id,
+            # "user_id": self.user.id, # this is sensitive, let's not reveal it
             "field1": self.field1,
             "jsonfield1": self.jsonfield1,
             "created_on": self.created_on.strftime("%m/%d/%Y %H:%M:%S"),
         }
+        # if the user requesting this item
+        # is specified and they own it, let the frontend know
+        if user_id is not None and user_id == self.user_id:
+            payload['owner'] = True
+
+        return payload
 
 
 class RevokedTokenModel(db.Model):

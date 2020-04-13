@@ -34,28 +34,32 @@ class Items(Resource):
         current_user = get_jwt_identity()
         user = User.query.filter_by(email=current_user).first()
         item = Item.query.get(request.values['id'])
-        if user.id != item.user_id:
-            return {'error': 'this item does not belong to you'}, 401
-
         if not item:
             return {'error': 'Item not found.'}, 400
+        if user.id != item.user_id:
+            return {'error': 'this item does not belong to you'}, 401
         db.session.delete(item)
         db.session.commit()
         return {}, 200
 
+    @jwt_required
     def get(self):
         """
         Get all items
         """
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(email=current_user).first()
         if request.args.get('id') is not None:
-            return [x.as_json() for x in Item.query.filter(Item.id == request.args.get('id'))]
-        return [x.as_json() for x in Item.query.all()], 200
+            return [x.as_json(user.id) for x in Item.query.filter(Item.id == request.args.get('id'))]
+        return [x.as_json(user.id) for x in Item.query.all()], 200
 
     @jwt_required
     def put(self):
         """
         Update an existing item
         """
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(email=current_user).first()
         if 'field1' not in request.json:
             return {'error': 'missing field1'}, 400
         if 'jsonfield1' not in request.json:
@@ -68,13 +72,15 @@ class Items(Resource):
         item.field1 = request.json['field1']
         item.jsonfield1 = request.json['jsonfield1']
         db.session.commit()
-        return [x.as_json() for x in Item.query.all()], 200
+        return [x.as_json(user.id) for x in Item.query.all()], 200
 
     @jwt_required
     def post(self):
         """
         Create a new item
         """
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(email=current_user).first()
         if request.content_type is None or 'application/json' not in request.content_type.split(';'):
             return {'error': 'invalid content type'}, 400
         if 'field1' not in request.json:
@@ -91,7 +97,7 @@ class Items(Resource):
                     user=user)
         db.session.add(item)
         db.session.commit()
-        return [x.as_json() for x in Item.query.all()], 200
+        return [x.as_json(user.id) for x in Item.query.all()], 200
 
 
 class Register(Resource):
