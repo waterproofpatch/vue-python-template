@@ -130,6 +130,7 @@ def test_delete_items_success(authenticated_client):
     assert 'error' in res.json
     assert 'Item not found' in res.json['error']
 
+    # this one is legit
     res = authenticated_client.delete("api/items?id=1")
     assert res.status_code == 200
 
