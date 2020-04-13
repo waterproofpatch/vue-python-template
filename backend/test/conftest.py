@@ -3,7 +3,7 @@ import tempfile
 import os
 
 from backend import flask_app, db, app
-from backend.models import User
+from backend.models import User, Item
 
 from flask_jwt_extended import create_access_token, create_refresh_token
 
@@ -15,6 +15,16 @@ def test_user():
     """
     test_user = User(email='test@gmail.com', password='passwordpassword')
     yield test_user
+
+
+@pytest.fixture
+def test_item():
+    """
+    A test item
+    """
+    test_item = Item(field1='field1_value', jsoonfield1={
+                     'jsonfield1_key1': 'jsonfield1_value1', "jsonfield1_list1": [1, 2, 3]})
+    yield test_item
 
 
 @pytest.fixture
@@ -36,7 +46,7 @@ def unauthenticated_client():
 @pytest.fixture()
 def authenticated_client(test_user, unauthenticated_client):
     """
-    A client with valid access and refresh tokens, capable of authenticating 
+    A client with valid access and refresh tokens, capable of authenticating
     against endpoints guarded with @jwt_reqired
     """
 
