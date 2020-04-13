@@ -187,13 +187,7 @@ export default {
     max-width: calc(75% - 1em);
   }
 }
-@media screen and (min-width: 60em) {
-  .card {
-    max-width: calc(25% - 1em);
-  }
-}
 .cards {
-  /* justify-content: space-between; */
   display: flex;
   flex-wrap: wrap;
   padding-top: 20px;
@@ -221,7 +215,6 @@ export default {
   justify-content: space-between;
   color: white;
   font-weight: 600;
-  /* border-bottom: 1px solid #409fbf; */
   background-color: #409fbf;
   padding: 5px 10px;
 }
