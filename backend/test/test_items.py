@@ -47,7 +47,7 @@ def test_post_items_fail_content_type(authenticated_client):
 
 def test_delete_items_fail_unauthenticated(unauthenticated_client):
     """
-    Test that items endpoint fails when content type is wrong
+    Test that items endpoint fails when we are not logged in and try to delete an item
     """
     res = unauthenticated_client.delete('/api/items?id=1')
     assert 401 == res.status_code
@@ -55,7 +55,7 @@ def test_delete_items_fail_unauthenticated(unauthenticated_client):
 
 def test_post_items_fail_unauthenticated(unauthenticated_client):
     """
-    Test that items endpoint fails when content type is wrong
+    Test that items endpoint fails when we are not logged in
     """
     res = unauthenticated_client.post('/api/items')
     assert 401 == res.status_code
@@ -63,7 +63,7 @@ def test_post_items_fail_unauthenticated(unauthenticated_client):
 
 def test_post_and_get_items_success(authenticated_client):
     """
-    Test that we can add an item
+    Test that we can add an item and retreive all of them
     """
     new_item = {'field1': 'field1_value', 'jsonfield1': {
         'key1': 'key1_value', 'list1': ['list1_value1', 'list1_value2']}}
@@ -75,6 +75,7 @@ def test_post_and_get_items_success(authenticated_client):
     assert len(res.json) == 1
     assert 'field1' in res.json[0]
     assert res.json[0]['field1'] == 'field1_value'
+    assert res.json[0]['owner'] == True
 
     new_item = {'field1': 'field1_value2', 'jsonfield1': {
         'key2': 'key2_value', 'list2': ['list2_value1', 'list2_value2']}}
@@ -86,11 +87,12 @@ def test_post_and_get_items_success(authenticated_client):
     assert len(res.json) == 2
     assert 'field1' in res.json[1]
     assert res.json[1]['field1'] == 'field1_value2'
+    assert res.json[1]['owner'] == True
 
 
 def test_post_and_get_items_one_success(authenticated_client):
     """
-    Test that we can add an item
+    Test that we can add an item and then retreive it by id
     """
     new_item = {'field1': 'field1_value', 'jsonfield1': {
         'key1': 'key1_value', 'list1': ['list1_value1', 'list1_value2']}}
@@ -102,6 +104,7 @@ def test_post_and_get_items_one_success(authenticated_client):
     assert len(res.json) == 1
     assert 'field1' in res.json[0]
     assert res.json[0]['field1'] == 'field1_value'
+    assert res.json[0]['owner'] == True
 
     new_item = {'field1': 'field1_value2', 'jsonfield1': {
         'key2': 'key2_value', 'list2': ['list2_value1', 'list2_value2']}}
@@ -113,11 +116,12 @@ def test_post_and_get_items_one_success(authenticated_client):
     assert len(res.json) == 2
     assert 'field1' in res.json[1]
     assert res.json[1]['field1'] == 'field1_value2'
+    assert res.json[1]['owner'] == True
 
 
 def test_delete_items_success(authenticated_client):
     """
-    Test that we can add an item
+    Test that we can delete an item
     """
     new_item = {'field1': 'field1_value', 'jsonfield1': {
         'key1': 'key1_value', 'list1': ['list1_value1', 'list1_value2']}}

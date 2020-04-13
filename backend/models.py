@@ -80,6 +80,7 @@ class Item(db.Model):
             "field1": self.field1,
             "jsonfield1": self.jsonfield1,
             "created_on": self.created_on.strftime("%m/%d/%Y %H:%M:%S"),
+            "owner": False
         }
         # if the user requesting this item
         # is specified and they own it, let the frontend know
