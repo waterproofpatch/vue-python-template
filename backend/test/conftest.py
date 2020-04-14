@@ -7,6 +7,18 @@ from backend.models import User, Item
 
 from flask_jwt_extended import create_access_token, create_refresh_token
 
+from backend.models import User, Item
+from backend import db
+
+
+@pytest.fixture
+def test_user_2():
+    """
+    A test database user
+    """
+    test_user = User(email='test2@gmail.com', password='passwordpassword2')
+    yield test_user
+
 
 @pytest.fixture
 def test_user_1():
@@ -34,7 +46,7 @@ def unauthenticated_client():
 
 
 @pytest.fixture()
-def authenticated_client(test_user_1, unauthenticated_client):
+def authenticated_client(test_user_1, test_user_2, unauthenticated_client):
     """
     A client with valid access and refresh tokens, capable of authenticating
     against endpoints guarded with @jwt_reqired
@@ -42,8 +54,10 @@ def authenticated_client(test_user_1, unauthenticated_client):
 
     with unauthenticated_client.application.app_context():
         db.session.add(test_user_1)
+        db.session.add(test_user_2)
         db.session.commit()
 
+        # we'll authenticate as test1
         access_token = create_access_token(identity='test1@gmail.com')
         refresh_token = create_refresh_token(identity='test1@gmail.com')
         unauthenticated_client.set_cookie(
@@ -51,3 +65,13 @@ def authenticated_client(test_user_1, unauthenticated_client):
         unauthenticated_client.set_cookie(
             '/', 'refresh_token_cookie', refresh_token)
     yield unauthenticated_client
+
+
+@pytest.fixture()
+def test_item(authenticated_client, test_user_1):
+    item = Item(field1='field1_value',
+                jsonfield1={'key': 'value'},
+                user=test_user_1)
+    with authenticated_client.application.app_context():
+        db.session.add(item)
+        db.session.commit()

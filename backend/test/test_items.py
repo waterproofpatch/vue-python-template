@@ -90,15 +90,10 @@ def test_post_and_get_items_success(authenticated_client):
     assert res.json[1]['owner'] == True
 
 
-def test_post_and_get_items_one_success(authenticated_client):
+def test_post_and_get_items_one_success(authenticated_client, test_item):
     """
-    Test that we can add an item and then retreive it by id
+    Test that we can retreive an item by id
     """
-    new_item = {'field1': 'field1_value', 'jsonfield1': {
-        'key1': 'key1_value', 'list1': ['list1_value1', 'list1_value2']}}
-    res = authenticated_client.post('api/items', json=new_item)
-    assert res.status_code == 200
-
     res = authenticated_client.get('api/items?id=1')
     assert res.status_code == 200
     assert len(res.json) == 1
@@ -106,44 +101,32 @@ def test_post_and_get_items_one_success(authenticated_client):
     assert res.json[0]['field1'] == 'field1_value'
     assert res.json[0]['owner'] == True
 
-    new_item = {'field1': 'field1_value2', 'jsonfield1': {
-        'key2': 'key2_value', 'list2': ['list2_value1', 'list2_value2']}}
-    res = authenticated_client.post('api/items', json=new_item)
-    assert res.status_code == 200
 
-    res = authenticated_client.get('api/items')
-    assert res.status_code == 200
-    assert len(res.json) == 2
-    assert 'field1' in res.json[1]
-    assert res.json[1]['field1'] == 'field1_value2'
-    assert res.json[1]['owner'] == True
-
-
-def test_delete_items_success(authenticated_client):
+def test_delete_items_wrong_id(authenticated_client, test_item):
     """
     Test that we can delete an item
     """
-    new_item = {'field1': 'field1_value', 'jsonfield1': {
-        'key1': 'key1_value', 'list1': ['list1_value1', 'list1_value2']}}
-    res = authenticated_client.post('api/items', json=new_item)
-    assert res.status_code == 200
-
-    res = authenticated_client.get('api/items')
-    assert res.status_code == 200
-    assert len(res.json) == 1
-    assert 'field1' in res.json[0]
-    assert res.json[0]['field1'] == 'field1_value'
-
-    # try deleting wrong item, should fail
     res = authenticated_client.delete("api/items?id=2")
     assert res.status_code == 400
     assert 'error' in res.json
     assert 'Item not found' in res.json['error']
 
-    # this one is legit
+    res = authenticated_client.get('api/items')
+    assert res.status_code == 200
+    assert len(res.json) == 1
+
+
+def test_delete_items_success(authenticated_client, test_item):
+    """
+    Test that we can delete an item
+    """
     res = authenticated_client.delete("api/items?id=1")
     assert res.status_code == 200
 
     res = authenticated_client.get('api/items')
     assert res.status_code == 200
     assert not res.json
+
+
+def test_get_item_not_mine(authenticated_client, test_item):
+    res = authenticated_client.get('api/items')
