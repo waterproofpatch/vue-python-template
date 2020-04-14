@@ -37,7 +37,7 @@ def test_user_2():
 
 
 @pytest.fixture
-def unauthenticated_client():
+def unauthenticated_client(test_user_1, test_user_2):
     """
     A client with no access tokens.
     """
@@ -49,7 +49,10 @@ def unauthenticated_client():
     app.init_db(db, drop_all=True)
 
     with flask_app.test_client() as client:
-        yield client
+        db.session.add(test_user_1)
+        db.session.add(test_user_2)
+        db.session.commit()
+    yield client
 
 
 @pytest.fixture()
@@ -59,12 +62,8 @@ def authenticated_client(test_user_1, test_user_2, unauthenticated_client):
     against endpoints guarded with @jwt_reqired
     """
 
+    # we'll authenticate as test1
     with unauthenticated_client.application.app_context():
-        db.session.add(test_user_1)
-        db.session.add(test_user_2)
-        db.session.commit()
-
-        # we'll authenticate as test1
         access_token = create_access_token(identity='test1@gmail.com')
         refresh_token = create_refresh_token(identity='test1@gmail.com')
         unauthenticated_client.set_cookie(

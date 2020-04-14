@@ -54,14 +54,10 @@ def test_post_login_missing_password(unauthenticated_client):
     assert 'Set-Cookie' not in res.headers
 
 
-def test_post_login_success(unauthenticated_client, test_user_1):
+def test_post_login_success(unauthenticated_client):
     """
     Test that we can login
     """
-    with unauthenticated_client.application.app_context():
-        db.session.add(test_user_1)
-        db.session.commit()
-
     res = unauthenticated_client.post(
         '/api/login',
         json={'email': 'test1@gmail.com', 'password': 'passwordpassword1'})
@@ -76,24 +72,21 @@ def test_post_login_success(unauthenticated_client, test_user_1):
                 'refresh_token_cookie')
             if value.startswith('access_token_cookie'):
                 token = value.split('=')[1].split(';')[0]
-                decoded_token = decode_token(token)
-                assert decoded_token['identity'] == 'test1@gmail.com'
-                assert decoded_token['type'] == 'access'
-                assert decoded_token['fresh'] == False
+                with unauthenticated_client.application.app_context():
+                    decoded_token = decode_token(token)
+                    assert decoded_token['identity'] == 'test1@gmail.com'
+                    assert decoded_token['type'] == 'access'
+                    assert decoded_token['fresh'] == False
             assert 'HttpOnly' in [x.strip() for x in value.split(';')]
 
 
-def test_post_login_success_shortlived_token(unauthenticated_client, test_user_1):
+def test_post_login_success_shortlived_token(unauthenticated_client):
     """
     Test that we can login, but that within 1 second we have an expired token
     """
     unauthenticated_client.application.config['JWT_ACCESS_TOKEN_EXPIRES'] = 1  # one second!
     # one second!
     unauthenticated_client.application.config['JWT_REFRESH_TOKEN_EXPIRES'] = 1
-
-    with unauthenticated_client.application.app_context():
-        db.session.add(test_user_1)
-        db.session.commit()
 
     res = unauthenticated_client.post(
         '/api/login',
@@ -113,17 +106,19 @@ def test_post_login_success_shortlived_token(unauthenticated_client, test_user_1
             if value.startswith('refresh_token_cookie'):
                 token = value.split('=')[1].split(';')[0]
                 refresh_token = token
-                decoded_token = decode_token(token)
-                assert decoded_token['identity'] == 'test1@gmail.com'
-                assert decoded_token['type'] == 'refresh'
+                with unauthenticated_client.application.app_context():
+                    decoded_token = decode_token(token)
+                    assert decoded_token['identity'] == 'test1@gmail.com'
+                    assert decoded_token['type'] == 'refresh'
                 assert 'HttpOnly' in [x.strip() for x in value.split(';')]
             if value.startswith('access_token_cookie'):
                 token = value.split('=')[1].split(';')[0]
                 access_token = token
-                decoded_token = decode_token(token)
-                assert decoded_token['identity'] == 'test1@gmail.com'
-                assert decoded_token['type'] == 'access'
-                assert decoded_token['fresh'] == False
+                with unauthenticated_client.application.app_context():
+                    decoded_token = decode_token(token)
+                    assert decoded_token['identity'] == 'test1@gmail.com'
+                    assert decoded_token['type'] == 'access'
+                    assert decoded_token['fresh'] == False
                 assert 'HttpOnly' in [x.strip() for x in value.split(';')]
 
     # wait for token to expire!
@@ -131,7 +126,8 @@ def test_post_login_success_shortlived_token(unauthenticated_client, test_user_1
     for token in [access_token, refresh_token]:
         expired = False
         try:
-            decoded_token = decode_token(token)
+            with unauthenticated_client.application.app_context():
+                decoded_token = decode_token(token)
         except jwt.exceptions.ExpiredSignatureError:
             expired = True
         finally:
