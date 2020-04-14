@@ -90,7 +90,7 @@ def test_post_and_get_items_success(authenticated_client):
     assert res.json[1]['owner'] == True
 
 
-def test_post_and_get_items_one_success(authenticated_client, test_item):
+def test_post_and_get_items_one_success(authenticated_client, test_items):
     """
     Test that we can retreive an item by id
     """
@@ -98,25 +98,39 @@ def test_post_and_get_items_one_success(authenticated_client, test_item):
     assert res.status_code == 200
     assert len(res.json) == 1
     assert 'field1' in res.json[0]
-    assert res.json[0]['field1'] == 'field1_value'
+    assert res.json[0]['field1'] == 'field1_value1'
     assert res.json[0]['owner'] == True
 
 
-def test_delete_items_wrong_id(authenticated_client, test_item):
+def test_delete_item_not_owner(authenticated_client, test_items):
     """
     Test that we can delete an item
     """
     res = authenticated_client.delete("api/items?id=2")
+    assert res.status_code == 401
+    assert 'error' in res.json
+    assert 'this item does not belong to you' in res.json['error']
+
+    res = authenticated_client.get('api/items')
+    assert res.status_code == 200
+    assert len(res.json) == 2
+
+
+def test_delete_item_wrong_id(authenticated_client, test_items):
+    """
+    Test that we can delete an item
+    """
+    res = authenticated_client.delete("api/items?id=3")
     assert res.status_code == 400
     assert 'error' in res.json
     assert 'Item not found' in res.json['error']
 
     res = authenticated_client.get('api/items')
     assert res.status_code == 200
-    assert len(res.json) == 1
+    assert len(res.json) == 2
 
 
-def test_delete_items_success(authenticated_client, test_item):
+def test_delete_items_success(authenticated_client, test_items):
     """
     Test that we can delete an item
     """
@@ -125,8 +139,8 @@ def test_delete_items_success(authenticated_client, test_item):
 
     res = authenticated_client.get('api/items')
     assert res.status_code == 200
-    assert not res.json
+    assert len(res.json) == 1
 
 
-def test_get_item_not_mine(authenticated_client, test_item):
+def test_get_item_not_mine(authenticated_client, test_items):
     res = authenticated_client.get('api/items')

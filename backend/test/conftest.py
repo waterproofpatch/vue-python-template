@@ -66,10 +66,14 @@ def authenticated_client(unauthenticated_client):
 
 
 @pytest.fixture()
-def test_item(authenticated_client, test_users):
-    item = Item(field1='field1_value',
-                jsonfield1={'key': 'value'},
-                user=test_users[0])
+def test_items(authenticated_client, test_users):
+    item_1 = Item(field1='field1_value1',
+                  jsonfield1={'key': 'value1'},
+                  user=test_users[0])
+    item_2 = Item(field1='field1_value2',
+                  jsonfield1={'key': 'value2'},
+                  user=test_users[1])
     with authenticated_client.application.app_context():
-        db.session.add(item)
+        db.session.add(item_1)
+        db.session.add(item_2)
         db.session.commit()
