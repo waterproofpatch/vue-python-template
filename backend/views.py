@@ -67,7 +67,9 @@ class Items(Resource):
             return {'error': 'field1 must not be 0 length'}, 400
         if not request.json['jsonfield1']:
             return {'error': 'jsonfield1 must not be 0 length'}, 400
-        item = Item.query.get(request.json['id'])
+        item = Item.query.get(request.values['id'])
+        if user.id != item.user_id:
+            return {'error': 'this item does not belong to you'}, 401
         item.field1 = request.json['field1']
         item.jsonfield1 = request.json['jsonfield1']
         db.session.commit()

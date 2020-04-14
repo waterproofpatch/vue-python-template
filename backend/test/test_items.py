@@ -143,4 +143,34 @@ def test_delete_items_success(authenticated_client, test_items):
 
 
 def test_get_item_not_mine(authenticated_client, test_items):
-    res = authenticated_client.get('api/items')
+    """
+    Test that when we request an item we don't own, we really don't own it
+    """
+    res = authenticated_client.get('api/items?id=2')
+    assert res.status_code == 200
+    assert len(res.json) == 1
+    assert res.json[0]['owner'] == False
+
+
+def test_put_item_success(authenticated_client, test_items):
+    """
+    Test that when we request an item we don't own, we really don't own it
+    """
+    new_item = {'field1': 'newvalue', 'jsonfield1': {
+        'newkey1': 'newkey1_value1', 'newlist1': ['newlist1_value1', 'newlist1_value2']}}
+    res = authenticated_client.put('api/items?id=1', json=new_item)
+    assert res.status_code == 200
+    assert len(res.json) == 2
+    assert res.json[0]['id'] == 1
+    assert res.json[0]['owner'] == True
+    assert res.json[0]['field1'] == 'newvalue'
+
+
+def test_put_item_not_owner(authenticated_client, test_items):
+    """
+    Test that when we request an item we don't own, we really don't own it
+    """
+    new_item = {'field1': 'newvalue', 'jsonfield1': {
+        'newkey1': 'newkey1_value1', 'newlist1': ['newlist1_value1', 'newlist1_value2']}}
+    res = authenticated_client.put('api/items?id=2', json=new_item)
+    assert res.status_code == 401
