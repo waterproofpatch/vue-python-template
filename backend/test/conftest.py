@@ -9,22 +9,12 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 
 
 @pytest.fixture
-def test_user():
+def test_user_1():
     """
     A test database user
     """
-    test_user = User(email='test@gmail.com', password='passwordpassword')
+    test_user = User(email='test1@gmail.com', password='passwordpassword1')
     yield test_user
-
-
-@pytest.fixture
-def test_item():
-    """
-    A test item
-    """
-    test_item = Item(field1='field1_value', jsoonfield1={
-                     'jsonfield1_key1': 'jsonfield1_value1', "jsonfield1_list1": [1, 2, 3]})
-    yield test_item
 
 
 @pytest.fixture
@@ -44,18 +34,18 @@ def unauthenticated_client():
 
 
 @pytest.fixture()
-def authenticated_client(test_user, unauthenticated_client):
+def authenticated_client(test_user_1, unauthenticated_client):
     """
     A client with valid access and refresh tokens, capable of authenticating
     against endpoints guarded with @jwt_reqired
     """
 
     with unauthenticated_client.application.app_context():
-        db.session.add(test_user)
+        db.session.add(test_user_1)
         db.session.commit()
 
-        access_token = create_access_token(identity='test@gmail.com')
-        refresh_token = create_refresh_token(identity='test@gmail.com')
+        access_token = create_access_token(identity='test1@gmail.com')
+        refresh_token = create_refresh_token(identity='test1@gmail.com')
         unauthenticated_client.set_cookie(
             '/', 'access_token_cookie', access_token)
         unauthenticated_client.set_cookie(
