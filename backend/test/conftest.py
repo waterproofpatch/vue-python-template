@@ -13,31 +13,23 @@ from backend import db
 
 
 @pytest.fixture
-def test_user_1():
+def test_users():
     """
     A test database user
     """
     hashed_pw = User.generate_hash(
         plaintext_password='passwordpassword1'.encode())
-    test_user = User(email='test1@gmail.com',
-                     password=base64.b64encode(hashed_pw).decode())
-    yield test_user
-
-
-@pytest.fixture
-def test_user_2():
-    """
-    A test database user
-    """
+    test_user_1 = User(email='test1@gmail.com',
+                       password=base64.b64encode(hashed_pw).decode())
     hashed_pw = User.generate_hash(
         plaintext_password='passwordpassword2'.encode())
-    test_user = User(email='test2@gmail.com',
-                     password=base64.b64encode(hashed_pw).decode())
-    yield test_user
+    test_user_2 = User(email='test2@gmail.com',
+                       password=base64.b64encode(hashed_pw).decode())
+    yield [test_user_1, test_user_2]
 
 
 @pytest.fixture
-def unauthenticated_client(test_user_1, test_user_2):
+def unauthenticated_client(test_users):
     """
     A client with no access tokens.
     """
@@ -49,14 +41,14 @@ def unauthenticated_client(test_user_1, test_user_2):
     app.init_db(db, drop_all=True)
 
     with flask_app.test_client() as client:
-        db.session.add(test_user_1)
-        db.session.add(test_user_2)
+        for test_user in test_users:
+            db.session.add(test_user)
         db.session.commit()
     yield client
 
 
 @pytest.fixture()
-def authenticated_client(test_user_1, test_user_2, unauthenticated_client):
+def authenticated_client(unauthenticated_client):
     """
     A client with valid access and refresh tokens, capable of authenticating
     against endpoints guarded with @jwt_reqired
@@ -74,10 +66,10 @@ def authenticated_client(test_user_1, test_user_2, unauthenticated_client):
 
 
 @pytest.fixture()
-def test_item(authenticated_client, test_user_1):
+def test_item(authenticated_client, test_users):
     item = Item(field1='field1_value',
                 jsonfield1={'key': 'value'},
-                user=test_user_1)
+                user=test_users[0])
     with authenticated_client.application.app_context():
         db.session.add(item)
         db.session.commit()
