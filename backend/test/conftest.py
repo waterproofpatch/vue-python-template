@@ -1,6 +1,7 @@
 import pytest
 import tempfile
 import os
+import base64
 
 from backend import flask_app, db, app
 from backend.models import User, Item
@@ -12,20 +13,26 @@ from backend import db
 
 
 @pytest.fixture
-def test_user_2():
-    """
-    A test database user
-    """
-    test_user = User(email='test2@gmail.com', password='passwordpassword2')
-    yield test_user
-
-
-@pytest.fixture
 def test_user_1():
     """
     A test database user
     """
-    test_user = User(email='test1@gmail.com', password='passwordpassword1')
+    hashed_pw = User.generate_hash(
+        plaintext_password='passwordpassword1'.encode())
+    test_user = User(email='test1@gmail.com',
+                     password=base64.b64encode(hashed_pw).decode())
+    yield test_user
+
+
+@pytest.fixture
+def test_user_2():
+    """
+    A test database user
+    """
+    hashed_pw = User.generate_hash(
+        plaintext_password='passwordpassword2'.encode())
+    test_user = User(email='test2@gmail.com',
+                     password=base64.b64encode(hashed_pw).decode())
     yield test_user
 
 
