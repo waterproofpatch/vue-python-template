@@ -92,6 +92,7 @@ export default {
   },
   props: {},
   data() {
+    const vm = this;
     return {
       items: [],
       loading: false,
@@ -119,7 +120,11 @@ export default {
           this.loading = false;
         });
     },
-    addItem: function(item) {
+    fileChanged: function(event) {
+      console.log("file changed got event ");
+    },
+    addItem: function(item, file) {
+      console.log("got a file " + file);
       this.axios
         .post("/api/items", {
           field1: item.field1,

@@ -26,10 +26,16 @@
         </div>
         <div class="form-field">
           <input
+            type="file"
+            @change="changeFile"
+          />
+        </div>
+        <div class="form-field">
+          <input
             class="btn"
             type="submit"
             value="Add"
-            v-on:click.prevent="$emit('add-item', newItem)"
+            v-on:click.prevent="$emit('add-item', newItem, file)"
           />
         </div>
       </form>
@@ -44,6 +50,7 @@ export default {
   props: {},
   data() {
     return {
+      file: null,
       newItem: {
         field1: "",
         attributes: {
@@ -55,7 +62,12 @@ export default {
     };
   },
   mounted() {},
-  methods: {}
+  methods: {
+    changeFile: function(event) {
+      console.log("file is " + event.target.files[0]);
+      this.file = event.target.files[0];
+    }
+  }
 };
 </script>
 
