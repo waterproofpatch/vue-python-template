@@ -21,8 +21,11 @@ run_uwsgi:
 	uwsgi --ini wsgi.ini 
 
 # Start the backend and then the frontend
-run_devel:
-	python -m backend.app & (cd frontend && npm run serve)
+run_backend:
+	python -m backend.app 
+
+run_frontend:
+	(cd frontend && npm run serve)
 
 test:
 	coverage run -m pytest backend/test -s && coverage html
