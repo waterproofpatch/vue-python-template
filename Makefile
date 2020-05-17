@@ -28,8 +28,10 @@ run_backend:
 run_frontend:
 	(cd frontend && npm run serve)
 
+# Run the tests and generate coverage
 test:
 	coverage run -m pytest backend/test -s && coverage html
 
+# remove artifacts
 clean:
-	rm -rf htmlcov .coverage 
+	rm -rf htmlcov .coverage uploads

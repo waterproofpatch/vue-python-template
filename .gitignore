@@ -13,7 +13,7 @@ tags.*
 *.db
 Untitled.code-workspace
 vue-python-template.code-workspace
-uploads
+uploads/**
 
 # node stuff
 node_modules
