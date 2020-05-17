@@ -20,10 +20,11 @@ deploy: docker push_docker
 run_uwsgi:
 	uwsgi --ini wsgi.ini 
 
-# Start the backend and then the frontend
+# Start the backend
 run_backend:
 	python -m backend.app 
 
+# Start the frontend
 run_frontend:
 	(cd frontend && npm run serve)
 
