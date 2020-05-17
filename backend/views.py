@@ -5,6 +5,7 @@ Views backend. Handles items, logins, registrations, logouts and tokens.
 import base64
 import bcrypt
 import os
+import uuid
 
 # flask imports
 from flask import jsonify
@@ -14,30 +15,53 @@ from flask_jwt_extended import create_access_token, create_refresh_token, jwt_re
     set_refresh_cookies, unset_jwt_cookies
 from werkzeug.utils import secure_filename
 
-from backend.models import User, Item, RevokedTokenModel
+from backend.models import User, Item, File, RevokedTokenModel
 
 # my imports, from __init__
 from backend import jwt, db, flask_app, allowed_file
 
 # globals
 PASSWORD_MIN_LEN = 13
+MAX_UPLOADS_PER_USER = 20
 
 
 @flask_app.route('/api/files', methods=['GET', 'POST'])
 @jwt_required
-def upoad_file():
+def upload_file():
     if request.method == 'POST':
+
+        # get the file from the request
         file = request.files['theFile']
+
+        # make sure this file has a valid extension
         if not file or not allowed_file(file.filename):
             print(f'invalid file {file.filename}')
-            return 'invalid file', 400
-        filename = secure_filename(file.filename)
-        print(f'saving filename f{filename}')
+            return 'invalid filename', 400
+
+        # sanitize filename, prepending a uuid
+        filename = str(uuid.uuid4()) + secure_filename(file.filename)
+
+        # find user performing the upload
         current_user = get_jwt_identity()
         user = User.query.filter_by(email=current_user).first()
         print(f'file uploaded by user {user.id}')
+
+        # see how many files the user has already uploaded
+        files = File.query.filter_by(user_id=user.id).all()
+        print(f'user has already uploaded {len(files)} files')
+        if len(files) >= MAX_UPLOADS_PER_USER:
+            print(f'user has already uploaded {MAX_UPLOADS_PER_USER}')
+            return 'already uploaded max number of allowed files', 400
+
+        # save file to disk
+        print(f'saving filename f{filename}')
         file.save(os.path.join(flask_app.config['UPLOAD_FOLDER'], filename))
-        return ''
+
+        # add an entry in the database
+        file = File(filename=filename, user=user)
+        db.session.add(file)
+        db.session.commit()
+        return 'success', 200
 
 
 class Items(Resource):

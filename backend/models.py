@@ -43,6 +43,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(300), unique=False, nullable=False)
     items = db.relationship('Item', backref='user', lazy=True)
+    files = db.relationship('File', backref='user', lazy=True)
 
     def __repr__(self):
         """
@@ -88,6 +89,16 @@ class Item(db.Model):
             payload['owner'] = True
 
         return payload
+
+
+class File(db.Model):
+    """
+    A file is uploaded by a user and has a unique name
+    """
+    __tablename__ = "file"
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(500), unique=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
 class RevokedTokenModel(db.Model):
