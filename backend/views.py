@@ -17,7 +17,7 @@ from werkzeug.utils import secure_filename
 from backend.models import User, Item, RevokedTokenModel
 
 # my imports, from __init__
-from backend import jwt, db, flask_app
+from backend import jwt, db, flask_app, allowed_file
 
 # globals
 PASSWORD_MIN_LEN = 13
@@ -28,6 +28,9 @@ PASSWORD_MIN_LEN = 13
 def upoad_file():
     if request.method == 'POST':
         file = request.files['theFile']
+        if not file or not allowed_file(file.filename):
+            print(f'invalid file {file.filename}')
+            return 'invalid file', 400
         filename = secure_filename(file.filename)
         print(f'saving filename f{filename}')
         current_user = get_jwt_identity()

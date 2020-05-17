@@ -29,7 +29,22 @@ def create_jwt(app):
     return jwt
 
 
+def allowed_file(filename):
+    """
+    Check if a filename has an extention that is allowed
+
+    :param filename: the filename to check
+    :return: True if the filename has an extension that is allowed
+    :return: False otherwise
+    """
+
+    allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
+
 def create_app():
+
     app = Flask(__name__)
 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
