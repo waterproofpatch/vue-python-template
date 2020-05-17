@@ -38,6 +38,7 @@ def create_app():
     else:
         print('Using sqlite')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['UPLOAD_FOLDER'] = "."
     app.config['JWT_SECRET_KEY'] = os.environ.get(
         'TEMPLATE_JWT_SECRET_KEY', 'changemepls')
     app.config['JWT_BLACKLIST_ENABLED'] = True

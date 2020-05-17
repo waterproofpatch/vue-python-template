@@ -125,6 +125,27 @@ export default {
     },
     addItem: function(item, file) {
       console.log("got a file " + file);
+      if (file != null) {
+        const formData = new FormData();
+        formData.append("theFile", file, file.name);
+        this.axios
+          .post("/api/files", formData, {
+            onUploadProgress: progressEvent => {
+              console.log(
+                "progress: " + progressEvent.loaded / progressEvent.total
+              );
+            }
+          })
+          .then(response => {
+            console.log("done sending file");
+          })
+          .catch(error => {
+            if (error.response.status == 400) {
+              this.error = error.response.data.error;
+              this.success = null;
+            }
+          });
+      }
       this.axios
         .post("/api/items", {
           field1: item.field1,

@@ -4,6 +4,7 @@ Views backend. Handles items, logins, registrations, logouts and tokens.
 # native imports
 import base64
 import bcrypt
+import os
 
 # flask imports
 from flask import jsonify
@@ -11,14 +12,27 @@ from flask_restful import Resource, request
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, \
     jwt_refresh_token_required, get_jwt_identity, get_raw_jwt, set_access_cookies, \
     set_refresh_cookies, unset_jwt_cookies
+from werkzeug.utils import secure_filename
 
 from backend.models import User, Item, RevokedTokenModel
 
 # my imports, from __init__
-from backend import jwt, db
+from backend import jwt, db, flask_app
 
 # globals
 PASSWORD_MIN_LEN = 13
+
+
+@flask_app.route('/api/files', methods=['GET', 'POST'])
+def upoad_file():
+    if request.method == 'POST':
+        print('handling post')
+        print('handling files')
+        file = request.files['theFile']
+        filename = secure_filename(file.filename)
+        print(f'saving filename f{filename}')
+        file.save(os.path.join(flask_app.config['UPLOAD_FOLDER'], filename))
+        return ''
 
 
 class Items(Resource):

@@ -24,6 +24,7 @@ api.add_resource(views.Login, '/api/login')
 api.add_resource(views.Logout, '/api/logout')
 api.add_resource(views.TokenRefresh, '/api/refresh')
 api.add_resource(views.Items, '/api/items')
+# api.add_resource(views.Files, '/api/files')
 
 
 def init_db(db, drop_all=False):
