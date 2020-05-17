@@ -132,7 +132,10 @@ export default {
           .post("/api/files", formData, {
             onUploadProgress: progressEvent => {
               console.log(
-                "progress: " + progressEvent.loaded / progressEvent.total
+                "loaded " +
+                  progressEvent.loaded +
+                  ", total " +
+                  progressEvent.total
               );
             }
           })

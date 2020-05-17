@@ -24,13 +24,15 @@ PASSWORD_MIN_LEN = 13
 
 
 @flask_app.route('/api/files', methods=['GET', 'POST'])
+@jwt_required
 def upoad_file():
     if request.method == 'POST':
-        print('handling post')
-        print('handling files')
         file = request.files['theFile']
         filename = secure_filename(file.filename)
         print(f'saving filename f{filename}')
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(email=current_user).first()
+        print(f'file uploaded by user {user.id}')
         file.save(os.path.join(flask_app.config['UPLOAD_FOLDER'], filename))
         return ''
 
