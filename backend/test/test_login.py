@@ -15,10 +15,11 @@ def test_post_login_wrong_email(unauthenticated_client):
     Test that we handle wrong email properly
     """
     res = unauthenticated_client.post(
-        '/api/login',
-        json={'email': 'test1@gmail.comwrong', 'password': 'passwordpassword1'})
+        "/api/login",
+        json={"email": "test1@gmail.comwrong", "password": "passwordpassword1"},
+    )
     assert 401 == res.status_code
-    assert 'Set-Cookie' not in res.headers
+    assert "Set-Cookie" not in res.headers
 
 
 def test_post_login_wrong_password(unauthenticated_client):
@@ -26,10 +27,11 @@ def test_post_login_wrong_password(unauthenticated_client):
     Test that we handle wrong password properly
     """
     res = unauthenticated_client.post(
-        '/api/login',
-        json={'email': 'test1@gmail.com', 'password': 'passwordpassword1wrong'})
+        "/api/login",
+        json={"email": "test1@gmail.com", "password": "passwordpassword1wrong"},
+    )
     assert 401 == res.status_code
-    assert 'Set-Cookie' not in res.headers
+    assert "Set-Cookie" not in res.headers
 
 
 def test_post_login_missing_email(unauthenticated_client):
@@ -37,21 +39,19 @@ def test_post_login_missing_email(unauthenticated_client):
     Test that we handle missing email properly
     """
     res = unauthenticated_client.post(
-        '/api/login',
-        json={'password': 'passwordpassword1'})
+        "/api/login", json={"password": "passwordpassword1"}
+    )
     assert 400 == res.status_code
-    assert 'Set-Cookie' not in res.headers
+    assert "Set-Cookie" not in res.headers
 
 
 def test_post_login_missing_password(unauthenticated_client):
     """
     Test that we handle missing password properly
     """
-    res = unauthenticated_client.post(
-        '/api/login',
-        json={'email': 'test1@gmail.com'})
+    res = unauthenticated_client.post("/api/login", json={"email": "test1@gmail.com"})
     assert 400 == res.status_code
-    assert 'Set-Cookie' not in res.headers
+    assert "Set-Cookie" not in res.headers
 
 
 def test_post_login_success(unauthenticated_client):
@@ -59,67 +59,71 @@ def test_post_login_success(unauthenticated_client):
     Test that we can login
     """
     res = unauthenticated_client.post(
-        '/api/login',
-        json={'email': 'test1@gmail.com', 'password': 'passwordpassword1'})
+        "/api/login", json={"email": "test1@gmail.com", "password": "passwordpassword1"}
+    )
     assert 200 == res.status_code
-    assert 'Set-Cookie' in res.headers
-    assert res.headers['Set-Cookie'].startswith('access_token_cookie'.lower())
-    assert 'email' in res.json and res.json['email'] == 'test1@gmail.com'
-    assert 'uid' in res.json and res.json['uid'] == 1
+    assert "Set-Cookie" in res.headers
+    assert res.headers["Set-Cookie"].startswith("access_token_cookie".lower())
+    assert "email" in res.json and res.json["email"] == "test1@gmail.com"
+    assert "uid" in res.json and res.json["uid"] == 1
     for key, value in res.headers:
-        if key == 'Set-Cookie':
-            assert value.startswith('access_token_cookie') or value.startswith(
-                'refresh_token_cookie')
-            if value.startswith('access_token_cookie'):
-                token = value.split('=')[1].split(';')[0]
+        if key == "Set-Cookie":
+            assert value.startswith("access_token_cookie") or value.startswith(
+                "refresh_token_cookie"
+            )
+            if value.startswith("access_token_cookie"):
+                token = value.split("=")[1].split(";")[0]
                 with unauthenticated_client.application.app_context():
                     decoded_token = decode_token(token)
-                    assert decoded_token['identity'] == 'test1@gmail.com'
-                    assert decoded_token['type'] == 'access'
-                    assert decoded_token['fresh'] == False
-            assert 'HttpOnly' in [x.strip() for x in value.split(';')]
+                    assert decoded_token["identity"] == "test1@gmail.com"
+                    assert decoded_token["type"] == "access"
+                    assert decoded_token["fresh"] == False
+            assert "HttpOnly" in [x.strip() for x in value.split(";")]
 
 
 def test_post_login_success_shortlived_token(unauthenticated_client):
     """
     Test that we can login, but that within 1 second we have an expired token
     """
-    unauthenticated_client.application.config['JWT_ACCESS_TOKEN_EXPIRES'] = 1  # one second!
+    unauthenticated_client.application.config[
+        "JWT_ACCESS_TOKEN_EXPIRES"
+    ] = 1  # one second!
     # one second!
-    unauthenticated_client.application.config['JWT_REFRESH_TOKEN_EXPIRES'] = 1
+    unauthenticated_client.application.config["JWT_REFRESH_TOKEN_EXPIRES"] = 1
 
     res = unauthenticated_client.post(
-        '/api/login',
-        json={'email': 'test1@gmail.com', 'password': 'passwordpassword1'})
+        "/api/login", json={"email": "test1@gmail.com", "password": "passwordpassword1"}
+    )
     assert 200 == res.status_code
-    assert 'Set-Cookie' in res.headers
-    assert res.headers['Set-Cookie'].startswith('access_token_cookie'.lower())
-    assert 'email' in res.json and res.json['email'] == 'test1@gmail.com'
-    assert 'uid' in res.json and res.json['uid'] == 1
+    assert "Set-Cookie" in res.headers
+    assert res.headers["Set-Cookie"].startswith("access_token_cookie".lower())
+    assert "email" in res.json and res.json["email"] == "test1@gmail.com"
+    assert "uid" in res.json and res.json["uid"] == 1
 
     access_token = None
     refresh_token = None
     for key, value in res.headers:
-        if key == 'Set-Cookie':
-            assert value.startswith('access_token_cookie') or value.startswith(
-                'refresh_token_cookie')
-            if value.startswith('refresh_token_cookie'):
-                token = value.split('=')[1].split(';')[0]
+        if key == "Set-Cookie":
+            assert value.startswith("access_token_cookie") or value.startswith(
+                "refresh_token_cookie"
+            )
+            if value.startswith("refresh_token_cookie"):
+                token = value.split("=")[1].split(";")[0]
                 refresh_token = token
                 with unauthenticated_client.application.app_context():
                     decoded_token = decode_token(token)
-                    assert decoded_token['identity'] == 'test1@gmail.com'
-                    assert decoded_token['type'] == 'refresh'
-                assert 'HttpOnly' in [x.strip() for x in value.split(';')]
-            if value.startswith('access_token_cookie'):
-                token = value.split('=')[1].split(';')[0]
+                    assert decoded_token["identity"] == "test1@gmail.com"
+                    assert decoded_token["type"] == "refresh"
+                assert "HttpOnly" in [x.strip() for x in value.split(";")]
+            if value.startswith("access_token_cookie"):
+                token = value.split("=")[1].split(";")[0]
                 access_token = token
                 with unauthenticated_client.application.app_context():
                     decoded_token = decode_token(token)
-                    assert decoded_token['identity'] == 'test1@gmail.com'
-                    assert decoded_token['type'] == 'access'
-                    assert decoded_token['fresh'] == False
-                assert 'HttpOnly' in [x.strip() for x in value.split(';')]
+                    assert decoded_token["identity"] == "test1@gmail.com"
+                    assert decoded_token["type"] == "access"
+                    assert decoded_token["fresh"] == False
+                assert "HttpOnly" in [x.strip() for x in value.split(";")]
 
     # wait for token to expire!
     time.sleep(2)

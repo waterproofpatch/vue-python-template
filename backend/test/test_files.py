@@ -5,8 +5,11 @@ import re
 
 
 def test_files_post(authenticated_client, unauthenticated_client):
-    """
-    <Description of the test>
+    """Test files posting
+
+    Arguments:
+        authenticated_client {Client} -- client with tokens
+        unauthenticated_client {Client} -- client without tokens
     """
     data = dict(
         theFile=(io.BytesIO(b'my file contents'), "valid.jpg"),
@@ -18,8 +21,11 @@ def test_files_post(authenticated_client, unauthenticated_client):
 
 
 def test_files_post_invalid_filename(authenticated_client, unauthenticated_client):
-    """
-    <Description of the test>
+    """Don't let us upload bins
+
+    Arguments:
+        authenticated_client {Client} -- client with tokens
+        unauthenticated_client {Client} -- client without tokens
     """
     data = dict(
         theFile=(io.BytesIO(b'my file contents'), "valid.bin"),
