@@ -39,7 +39,7 @@ def upload_file():
             return 'invalid filename', 400
 
         # sanitize filename, prepending a uuid
-        filename = str(uuid.uuid4()) + secure_filename(file.filename)
+        filename = str(uuid.uuid4()) + '-' + secure_filename(file.filename)
 
         # find user performing the upload
         current_user = get_jwt_identity()
