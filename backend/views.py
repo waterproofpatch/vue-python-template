@@ -32,14 +32,27 @@ from backend import jwt, db, flask_app, allowed_file
 PASSWORD_MIN_LEN = 13
 MAX_UPLOADS_PER_USER = 20
 
+
 @flask_app.route("/api/files", methods=["GET", "POST"])
 @jwt_required
-def upload_file():
+def Files():
     """Handle upload of file
 
     Returns:
         tuple -- response text, status code
     """
+    if request.method == "GET":
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(email=current_user).first()
+        if request.args.get("id") is not None:
+            return jsonify(
+                [
+                    x.as_json(user.id)
+                    for x in File.query.filter(File.id == request.args.get("id"))
+                ]
+            )
+        return jsonify([x.as_json(user.id) for x in File.query.all()])
+
     if request.method == "POST":
 
         # get the file from the request
