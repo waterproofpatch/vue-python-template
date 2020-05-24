@@ -32,7 +32,6 @@ from backend import jwt, db, flask_app, allowed_file
 PASSWORD_MIN_LEN = 13
 MAX_UPLOADS_PER_USER = 20
 
-
 @flask_app.route("/api/files", methods=["GET", "POST"])
 @jwt_required
 def upload_file():

@@ -12,6 +12,9 @@
           <li v-if="$store.state.uid!=null">
             <router-link to="/items">Items</router-link>
           </li>
+          <li v-if="$store.state.uid!=null">
+            <router-link to="/images">Images</router-link>
+          </li>
           <li v-if="$store.state.uid==null">
             <router-link to="/register">Register </router-link>
           </li>

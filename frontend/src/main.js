@@ -5,6 +5,7 @@ import Login from "./components/Login.vue";
 import Index from "./components/Index.vue";
 import Items from "./components/Items.vue";
 import Item from "./components/Item.vue";
+import Images from "./components/Images.vue";
 
 // fontawesome
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -40,32 +41,37 @@ const routes = [
   {
     path: "/register",
     component: Register,
-    name: "Register"
+    name: "Register",
   },
   {
     path: "/login",
     component: Login,
-    name: "Login"
+    name: "Login",
   },
   {
     path: "/",
     component: Index,
-    name: "Index"
+    name: "Index",
   },
   {
     path: "/items",
     component: Items,
-    name: "Items"
+    name: "Items",
   },
   {
     path: "/items/:id",
     component: Item,
-    name: "Item"
-  }
+    name: "Item",
+  },
+  {
+    path: "/images",
+    component: Images,
+    name: "Images",
+  },
 ];
 
 const router = new VueRouter({
-  routes // short for `routes: routes`
+  routes, // short for `routes: routes`
 });
 
 // nav guard to prompt user to login
@@ -104,10 +110,10 @@ axios.interceptors.response.use(
 
 // end axios interceptors
 new Vue({
-  render: h => h(App),
+  render: (h) => h(App),
   router,
   store,
   beforeCreate() {
     this.$store.commit("initStore");
-  }
+  },
 }).$mount("#app");

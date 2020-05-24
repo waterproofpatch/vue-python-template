@@ -5,23 +5,9 @@
       <form class="form form-item">
         <div class="form-field">
           <input
-            placeholder="Field1"
-            type="text"
-            v-model="newItem.field1"
-          />
-        </div>
-        <div class="form-field">
-          <input
-            placeholder="JsonFieldAttributeA"
-            type="text"
-            v-model="newItem.attributes.attributeA"
-          />
-        </div>
-        <div class="form-field">
-          <input
-            placeholder="JsonFieldAttributeB"
-            type="text"
-            v-model="newItem.attributes.attributeB"
+            type="file"
+            class="btn"
+            @change="changeFile"
           />
         </div>
         <div class="form-field">
@@ -29,7 +15,7 @@
             class="btn"
             type="submit"
             value="Add"
-            v-on:click.prevent="$emit('add-item', newItem)"
+            v-on:click.prevent="uploadFile()"
           />
         </div>
       </form>
@@ -40,22 +26,45 @@
 <script>
 /* eslint-disable */
 export default {
-  name: "Items",
+  name: "Images",
   props: {},
   data() {
     return {
-      newItem: {
-        field1: "",
-        attributes: {
-          attributeA: "",
-          attributeB: ""
-        }
-      },
+      file: null,
       error: null
     };
   },
   mounted() {},
-  methods: {}
+  methods: {
+    uploadFile: function() {
+      const formData = new FormData();
+      formData.append("theFile", this.file, this.file.name);
+      this.axios
+        .post("/api/files", formData, {
+          onUploadProgress: progressEvent => {
+            console.log(
+              "loaded " +
+                progressEvent.loaded +
+                ", total " +
+                progressEvent.total
+            );
+          }
+        })
+        .then(response => {
+          console.log("done sending file");
+        })
+        .catch(error => {
+          if (error.response.status == 400) {
+            this.error = error.response.data.error;
+            this.success = null;
+          }
+        });
+    },
+    changeFile: function(event) {
+      console.log("setting this file to " + event.target.files[0]);
+      this.file = event.target.files[0];
+    }
+  }
 };
 </script>
 
