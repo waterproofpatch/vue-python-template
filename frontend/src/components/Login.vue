@@ -69,6 +69,8 @@ export default {
         .catch(error => {
           if (error.response.status == 400) {
             this.error = error.response.data.error;
+          } else if (error.response.status == 401) {
+            this.error = error.response.data.error;
           } else {
             this.error = error.response.status;
           }
