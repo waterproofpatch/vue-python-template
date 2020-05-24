@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2 v-if="error">Error: {{ error }}</h2>
+    <h2 v-if="success">Success: {{ success }}</h2>
     <div class="form-container">
       <form class="form form-item">
         <div class="form-field">
@@ -20,6 +21,12 @@
         </div>
       </form>
     </div>
+    <div
+      v-for="image in images"
+      v-bind:key="image.id"
+    >
+      <p>Image filename is {{image.filename}}</p>
+    </div>
   </div>
 </template>
 
@@ -31,12 +38,37 @@ export default {
   data() {
     return {
       file: null,
-      error: null
+      images: [],
+      error: null,
+      success: null
     };
   },
-  mounted() {},
+  mounted() {
+    this.getFiles();
+  },
   methods: {
+    getFiles: function() {
+      this.loading = true;
+      this.axios
+        .get("/api/files")
+        .then(response => {
+          console.log("got response " + response);
+          this.images = response.data;
+        })
+        .catch(error => {
+          console.log("error getting files");
+          this.images = [];
+          this.error = error.response.data.error;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
     uploadFile: function() {
+      if (this.file == null) {
+        this.error = "Must select a file";
+        return;
+      }
       const formData = new FormData();
       formData.append("theFile", this.file, this.file.name);
       this.axios
@@ -52,6 +84,8 @@ export default {
         })
         .then(response => {
           console.log("done sending file");
+          this.success = "Upload successful.";
+          this.error = null;
         })
         .catch(error => {
           if (error.response.status == 400) {
