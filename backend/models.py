@@ -102,6 +102,25 @@ class File(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(500), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    created_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def as_json(self, user_id=None):
+        """
+        JSON representation of this model
+        """
+        payload = {
+            "id": self.id,
+            # "user_id": self.user.id, # this is sensitive, let's not reveal it
+            "created_on": self.created_on.strftime("%m/%d/%Y %H:%M:%S"),
+            "filename": self.filename,
+            "owner": False,
+        }
+        # if the user requesting this item
+        # is specified and they own it, let the frontend know
+        if user_id is not None and user_id == self.user_id:
+            payload["owner"] = True
+
+        return payload
 
 
 class RevokedTokenModel(db.Model):
