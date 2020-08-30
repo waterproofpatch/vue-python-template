@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # native imports
 import os
-import colorlog
+import logging
 
 # flask imports
 from flask import Flask
@@ -9,7 +9,22 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 
+# installed imports
+import colorlog
+
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+# get a logger for use everywhere
+HANDLER = colorlog.StreamHandler()
+HANDLER.setFormatter(
+    colorlog.ColoredFormatter(
+        "%(log_color)s%(levelname)s:%(filename)s:%(lineno)s:%(message)s"
+    )
+)
+
+LOGGER = colorlog.getLogger(__name__)
+LOGGER.addHandler(HANDLER)
+LOGGER.setLevel(logging.DEBUG)
 
 
 def create_db(app):
@@ -51,10 +66,11 @@ def create_app():
         "DATABASE_URL", "sqlite:///" + os.path.join(basedir, "app.db")
     )
 
+    # figure out which db to use
     if app.config["SQLALCHEMY_DATABASE_URI"].startswith("postgres"):
-        print("Using posgress")
+        LOGGER.debug("Using posgress")
     else:
-        print("Using sqlite")
+        LOGGER.debug("Using sqlite")
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["UPLOAD_FOLDER"] = "uploads"
@@ -66,7 +82,6 @@ def create_app():
     app.config["JWT_BLACKLIST_TOKEN_CHECKS"] = ["access", "refresh"]
     app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 60 * 15  # fifteen minutes
-    # app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 1
     app.config["JWT_REFRESH_TOKEN_EXPIRES"] = 60 * 60 * 24 * 30  # 30 days
     # TODO change this to True once we test this
     app.config["JWT_COOKIE_CSRF_PROTECT"] = False
@@ -75,6 +90,7 @@ def create_app():
     app.config["JWT_COOKIE_SECURE"] = os.environ.get("USE_SECURE_COOKIES", False)
 
     # create location for file uploads
+    LOGGER.debug(f"upload folder is {app.config['UPLOAD_FOLDER']}")
     if not os.path.exists(app.config["UPLOAD_FOLDER"]):
         os.mkdir(app.config["UPLOAD_FOLDER"])
 
