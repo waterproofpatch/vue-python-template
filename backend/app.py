@@ -63,4 +63,5 @@ if __name__ == "__main__":
     if args.initonly:
         sys.exit(0)
 
+    print("Running app from flask!")
     flask_app.run(debug=True)
