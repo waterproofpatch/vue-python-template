@@ -26,7 +26,7 @@ from werkzeug.utils import secure_filename
 from backend.models import User, Item, File, RevokedTokenModel
 
 # my imports, from __init__
-from backend import jwt, db, flask_app, allowed_file
+from backend import jwt, db, flask_app, allowed_file, LOGGER
 
 # globals
 PASSWORD_MIN_LEN = 13
@@ -60,7 +60,7 @@ def Files():
 
         # make sure this file has a valid extension
         if not file or not allowed_file(file.filename):
-            print(f"invalid file {file.filename}")
+            LOGGER.error(f"invalid file {file.filename}")
             return "invalid filename", 400
 
         # sanitize filename, prepending a uuid
@@ -69,17 +69,17 @@ def Files():
         # find user performing the upload
         current_user = get_jwt_identity()
         user = User.query.filter_by(email=current_user).first()
-        print(f"file uploaded by user {user.id}")
+        LOGGER.debug(f"file uploaded by user {user.id}")
 
         # see how many files the user has already uploaded
         files = File.query.filter_by(user_id=user.id).all()
-        print(f"user has already uploaded {len(files)} files")
+        LOGGER.error(f"user has already uploaded {len(files)} files")
         if len(files) >= MAX_UPLOADS_PER_USER:
-            print(f"user has already uploaded {MAX_UPLOADS_PER_USER}")
+            LOGGER.error(f"user has already uploaded {MAX_UPLOADS_PER_USER}")
             return "already uploaded max number of allowed files", 400
 
         # save file to disk
-        print(f"saving filename f{filename}")
+        LOGGER.debug(f"saving filename {filename}")
         file.save(os.path.join(flask_app.config["UPLOAD_FOLDER"], filename))
 
         # add an entry in the database
@@ -397,7 +397,7 @@ def TokenExpiredCallback(expired_token):
     Returns:
         tuple -- {'message'}, status_code
     """
-    print("expired token!")
+    LOGGER.error("expired token!")
     token_type = expired_token["type"]
     return (
         jsonify(

@@ -16,7 +16,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 # my imports, some from __init__
 from backend import flask_app, api, views, db
-
+from . import LOGGER
 
 api.add_resource(views.Profile, "/api/profile")
 api.add_resource(views.Register, "/api/register")
@@ -31,10 +31,10 @@ def init_db(db, drop_all=False):
     """
     Initialize the database
     """
-    print("Initializing DB {}".format(db))
+    LOGGER.info("Initializing DB {}".format(db))
     db.init_app(flask_app)
     if drop_all:
-        print("Dropping tables...")
+        LOGGER.info("Dropping tables...")
         db.drop_all()
     db.create_all()
     db.session.commit()
@@ -63,5 +63,5 @@ if __name__ == "__main__":
     if args.initonly:
         sys.exit(0)
 
-    print("Running app from flask!")
+    LOGGER.info("Running app from flask!")
     flask_app.run(debug=True)

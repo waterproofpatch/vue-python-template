@@ -91,11 +91,12 @@ axios.interceptors.response.use(
     return response;
   },
   function(error) {
-    // Logout if we get unauth
+    // expired token
     if (error.response.status === 401) {
       store.commit("logout");
       router.push("login");
     }
+    // invalid creds
     if (error.response.status === 403) {
       store.commit("logout");
       router.push("login");
